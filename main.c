@@ -15,18 +15,25 @@
     https://github.com/liballeg/allegro_wiki/wiki/Allegro-Vivace%3A-Basic-game-structure
 */
 
-// ruch_w_prawo(ALLEGRO_BITMAP* obiekt, int pozycja_obiektu, int szybkosc_przesuwania)
-int ruch_w_prawo(ALLEGRO_BITMAP* gracz, int x_gracz, int szybkosc_gracza) {
+struct Gracz {
+    ALLEGRO_BITMAP* grafika;
+    int zycie;
+    int szybkosc_gracza;
+    int x_pozycja;
+};
+
+// ruch_w_prawo(int pozycja_obiektu, int szybkosc_przesuwania, int szerokosc_obiektu)
+int ruch_w_prawo(int x_gracz, int szybkosc_gracza, int szerokosc_gracza) {
     x_gracz += szybkosc_gracza;
-    if (x_gracz >= SZEROKOSC_EKRANU - al_get_bitmap_width(gracz)) {
-        x_gracz = SZEROKOSC_EKRANU - al_get_bitmap_width(gracz);
+    if (x_gracz >= SZEROKOSC_EKRANU - szerokosc_gracza) {
+        x_gracz = SZEROKOSC_EKRANU - szerokosc_gracza;
     }
 
     return x_gracz;
 }
 
-// ruch_w_lewo(ALLEGRO_BITMAP* obiekt, int pozycja_obiektu, int szybkosc_przesuwania)
-int ruch_w_lewo(ALLEGRO_BITMAP* gracz, int x_gracz, int szybkosc_gracza) {
+// ruch_w_lewo(int pozycja_obiektu, int szybkosc_przesuwania)
+int ruch_w_lewo(int x_gracz, int szybkosc_gracza) {
     x_gracz -= szybkosc_gracza;
     if (x_gracz <= 0) {
         x_gracz = 0;
@@ -57,9 +64,8 @@ int main()
     }
 
     // Ustawienia gracza
-    ALLEGRO_BITMAP* gracz = al_load_bitmap("obrazki/platforma_gracza.png");
-    int x_gracz = (int) SZEROKOSC_EKRANU/2;
-    int szybkosc_gracza = 5;
+    struct Gracz gracz = {al_load_bitmap("obrazki/platforma_gracza.png"), 3, 5, (int) SZEROKOSC_EKRANU/2};
+
 
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
@@ -76,9 +82,9 @@ int main()
         {
             case ALLEGRO_EVENT_TIMER:
                 if(key[ALLEGRO_KEY_LEFT])
-                    x_gracz = ruch_w_lewo(gracz, x_gracz, szybkosc_gracza);
+                    gracz.x_pozycja = ruch_w_lewo(gracz.x_pozycja, gracz.szybkosc_gracza);
                 if(key[ALLEGRO_KEY_RIGHT])
-                    x_gracz = ruch_w_prawo(gracz, x_gracz, szybkosc_gracza);
+                    gracz.x_pozycja = ruch_w_prawo(gracz.x_pozycja, gracz.szybkosc_gracza, al_get_bitmap_width(gracz.grafika));
 
                 if(key[ALLEGRO_KEY_ESCAPE])
                     zakoncz_program = true;
@@ -111,7 +117,7 @@ int main()
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
             // rysowanie platformy gracza
-            al_draw_bitmap(gracz, x_gracz, WYSOKOSC_EKRANU - 20, 0);
+            al_draw_bitmap(gracz.grafika, gracz.x_pozycja, WYSOKOSC_EKRANU - 20, 0);
 
             al_flip_display();
 
@@ -124,7 +130,7 @@ int main()
     al_destroy_timer(timer);
     al_destroy_event_queue(queue);
 
-    al_destroy_bitmap(gracz);
+    al_destroy_bitmap(gracz.grafika);
 
     return 0;
 }
