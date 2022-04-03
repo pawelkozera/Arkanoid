@@ -15,6 +15,12 @@
     https://github.com/liballeg/allegro_wiki/wiki/Allegro-Vivace%3A-Basic-game-structure
 */
 
+struct Ustawienia_gry {
+    int poziom_gry;
+    ALLEGRO_BITMAP* tlo;
+    bool zakoncz_program;
+};
+
 struct Gracz {
     ALLEGRO_BITMAP* grafika;
     int zycie;
@@ -66,11 +72,12 @@ int main()
     // Ustawienia gracza
     struct Gracz gracz = {al_load_bitmap("obrazki/platforma_gracza.png"), 3, 5, (int) SZEROKOSC_EKRANU/2};
 
+    // Ustawienia gry
+    struct Ustawienia_gry ustawienia_gry = {0, al_load_bitmap("obrazki/tlo.png"), false};
 
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
 
-    bool zakoncz_program = false;
     bool redraw = true;
 
     al_start_timer(timer);
@@ -87,7 +94,7 @@ int main()
                     gracz.x_pozycja = ruch_w_prawo(gracz.x_pozycja, gracz.szybkosc_gracza, al_get_bitmap_width(gracz.grafika));
 
                 if(key[ALLEGRO_KEY_ESCAPE])
-                    zakoncz_program = true;
+                    ustawienia_gry.zakoncz_program = true;
 
                 for(int i = 0; i < ALLEGRO_KEY_MAX; i++)
                     key[i] &= KEY_SEEN;
@@ -104,17 +111,18 @@ int main()
                 break;
 
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
-                zakoncz_program = true;
+                ustawienia_gry.zakoncz_program = true;
                 break;
         }
 
-        if (zakoncz_program) {
+        if (ustawienia_gry.zakoncz_program) {
             break;
         }
 
         if (redraw && al_is_event_queue_empty(queue))
         {
-            al_clear_to_color(al_map_rgb(0, 0, 0));
+            // rysowanie t³a
+            al_draw_bitmap(ustawienia_gry.tlo, 0, 0, 0);
 
             // rysowanie platformy gracza
             al_draw_bitmap(gracz.grafika, gracz.x_pozycja, WYSOKOSC_EKRANU - 20, 0);
@@ -131,6 +139,7 @@ int main()
     al_destroy_event_queue(queue);
 
     al_destroy_bitmap(gracz.grafika);
+    al_destroy_bitmap(ustawienia_gry.tlo);
 
     return 0;
 }
