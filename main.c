@@ -15,6 +15,25 @@
     https://github.com/liballeg/allegro_wiki/wiki/Allegro-Vivace%3A-Basic-game-structure
 */
 
+// ruch_w_prawo(ALLEGRO_BITMAP* obiekt, int pozycja_obiektu, int szybkosc_przesuwania)
+int ruch_w_prawo(ALLEGRO_BITMAP* gracz, int x_gracz, int szybkosc_gracza) {
+    x_gracz += szybkosc_gracza;
+    if (x_gracz >= SZEROKOSC_EKRANU - al_get_bitmap_width(gracz)) {
+        x_gracz = SZEROKOSC_EKRANU - al_get_bitmap_width(gracz);
+    }
+
+    return x_gracz;
+}
+
+// ruch_w_lewo(ALLEGRO_BITMAP* obiekt, int pozycja_obiektu, int szybkosc_przesuwania)
+int ruch_w_lewo(ALLEGRO_BITMAP* gracz, int x_gracz, int szybkosc_gracza) {
+    x_gracz -= szybkosc_gracza;
+    if (x_gracz <= 0) {
+        x_gracz = 0;
+    }
+
+    return x_gracz;
+}
 
 int main()
 {
@@ -57,15 +76,9 @@ int main()
         {
             case ALLEGRO_EVENT_TIMER:
                 if(key[ALLEGRO_KEY_LEFT])
-                    x_gracz -= szybkosc_gracza;
-                    if (x_gracz <= 0) {
-                        x_gracz = 0;
-                    }
+                    x_gracz = ruch_w_lewo(gracz, x_gracz, szybkosc_gracza);
                 if(key[ALLEGRO_KEY_RIGHT])
-                    x_gracz += szybkosc_gracza;
-                    if (x_gracz >= SZEROKOSC_EKRANU - al_get_bitmap_width(gracz)) {
-                        x_gracz = SZEROKOSC_EKRANU - al_get_bitmap_width(gracz);
-                    }
+                    x_gracz = ruch_w_prawo(gracz, x_gracz, szybkosc_gracza);
 
                 if(key[ALLEGRO_KEY_ESCAPE])
                     zakoncz_program = true;
