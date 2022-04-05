@@ -7,6 +7,8 @@
 
 #define SZEROKOSC_EKRANU 800
 #define WYSOKOSC_EKRANU 600
+#define SZEROKOSC_CEGIELKI 80
+#define WYSOKOSC_CEGIELKI 50
 #define KEY_SEEN     1
 #define KEY_RELEASED 2
 
@@ -26,6 +28,13 @@ struct Gracz {
     int zycie;
     int szybkosc_gracza;
     int x_pozycja;
+};
+
+struct Cegielki {
+    ALLEGRO_BITMAP* cegla;
+    int wytrzymalosc;
+    int x_pozycja;
+    int y_pozycja;
 };
 
 // ruch_w_prawo(int pozycja_obiektu, int szybkosc_przesuwania, int szerokosc_obiektu)
@@ -75,6 +84,9 @@ int main()
     // Ustawienia gry
     struct Ustawienia_gry ustawienia_gry = {0, al_load_bitmap("obrazki/tlo.png"), false};
 
+    // Ustawienia cegielek
+    struct Cegielki cegielki[10][4] = {al_load_bitmap("obrazki/cegla.png"), 1, 0, 0};
+
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
 
@@ -121,12 +133,25 @@ int main()
 
         if (redraw && al_is_event_queue_empty(queue))
         {
-            // rysowanie t³a
+            // rysowanie tÂ³a
             al_draw_bitmap(ustawienia_gry.tlo, 0, 0, 0);
 
             // rysowanie platformy gracza
             al_draw_bitmap(gracz.grafika, gracz.x_pozycja, WYSOKOSC_EKRANU - 20, 0);
 
+            // rysowanie cegielek
+            int i, j;
+            for(i = 0; i < 4; i++)
+            {
+                for(j = 0; j < 10; j++)
+                {
+                    cegielki[j][i].wytrzymalosc = 1;
+                    cegielki[j][i].x_pozycja = j * SZEROKOSC_CEGIELKI;
+                    cegielki[j][i].y_pozycja = i * WYSOKOSC_CEGIELKI;
+                    al_draw_bitmap(cegielki[j][i].cegla, cegielki[j][i].x_pozycja, cegielki[j][i].y_pozycja, 0);
+                    //puts("HALO HALO HALO HALO HALO HALO ");
+                }
+            }
             al_flip_display();
 
             redraw = false;
@@ -140,6 +165,7 @@ int main()
 
     al_destroy_bitmap(gracz.grafika);
     al_destroy_bitmap(ustawienia_gry.tlo);
+    //al_destroy_bitmap(cegielki.cegla);
 
     return 0;
 }
