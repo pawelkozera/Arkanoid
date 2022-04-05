@@ -148,7 +148,7 @@ int main()
                     cegielki[j][i].wytrzymalosc = 1;
                     cegielki[j][i].x_pozycja = j * SZEROKOSC_CEGIELKI;
                     cegielki[j][i].y_pozycja = i * WYSOKOSC_CEGIELKI;
-                    al_draw_bitmap(cegielki[j][i].cegla, cegielki[j][i].x_pozycja, cegielki[j][i].y_pozycja, 0);
+                    //al_draw_bitmap(cegielki[j][i].cegla, cegielki[j][i].x_pozycja, cegielki[j][i].y_pozycja, 0);
                     //puts("HALO HALO HALO HALO HALO HALO ");
                 }
             }
