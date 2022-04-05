@@ -19,22 +19,25 @@
 
 struct Ustawienia_gry {
     int poziom_gry;
-    ALLEGRO_BITMAP* tlo;
     bool zakoncz_program;
 };
 
 struct Gracz {
-    ALLEGRO_BITMAP* grafika;
     int zycie;
     int szybkosc_gracza;
     int x_pozycja;
 };
 
 struct Cegielki {
-    ALLEGRO_BITMAP* cegla;
     int wytrzymalosc;
     int x_pozycja;
     int y_pozycja;
+};
+
+struct Grafiki {
+    ALLEGRO_BITMAP* tlo;
+    ALLEGRO_BITMAP* platforma;
+    ALLEGRO_BITMAP* cegla;
 };
 
 // ruch_w_prawo(int pozycja_obiektu, int szybkosc_przesuwania, int szerokosc_obiektu)
@@ -79,13 +82,16 @@ int main()
     }
 
     // Ustawienia gracza
-    struct Gracz gracz = {al_load_bitmap("obrazki/platforma_gracza.png"), 3, 5, (int) SZEROKOSC_EKRANU/2};
+    struct Gracz gracz = {3, 5, (int) SZEROKOSC_EKRANU/2};
 
     // Ustawienia gry
-    struct Ustawienia_gry ustawienia_gry = {0, al_load_bitmap("obrazki/tlo.png"), false};
+    struct Ustawienia_gry ustawienia_gry = {0, false};
 
     // Ustawienia cegielek
-    struct Cegielki cegielki[10][4] = {al_load_bitmap("obrazki/cegla.png"), 1, 0, 0};
+    struct Cegielki cegielki[10][4] = {1, 0, 0};
+
+    // Ustawienia grafik gry
+    struct Grafiki grafiki = {al_load_bitmap("obrazki/tlo.png"), al_load_bitmap("obrazki/platforma_gracza.png"), al_load_bitmap("obrazki/cegla.png")};
 
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
@@ -103,7 +109,7 @@ int main()
                 if(key[ALLEGRO_KEY_LEFT])
                     gracz.x_pozycja = ruch_w_lewo(gracz.x_pozycja, gracz.szybkosc_gracza);
                 if(key[ALLEGRO_KEY_RIGHT])
-                    gracz.x_pozycja = ruch_w_prawo(gracz.x_pozycja, gracz.szybkosc_gracza, al_get_bitmap_width(gracz.grafika));
+                    gracz.x_pozycja = ruch_w_prawo(gracz.x_pozycja, gracz.szybkosc_gracza, al_get_bitmap_width(grafiki.platforma));
 
                 if(key[ALLEGRO_KEY_ESCAPE])
                     ustawienia_gry.zakoncz_program = true;
@@ -133,11 +139,11 @@ int main()
 
         if (redraw && al_is_event_queue_empty(queue))
         {
-            // rysowanie t³a
-            al_draw_bitmap(ustawienia_gry.tlo, 0, 0, 0);
+            // rysowanie tla
+            al_draw_bitmap(grafiki.tlo, 0, 0, 0);
 
             // rysowanie platformy gracza
-            al_draw_bitmap(gracz.grafika, gracz.x_pozycja, WYSOKOSC_EKRANU - 20, 0);
+            al_draw_bitmap(grafiki.platforma, gracz.x_pozycja, WYSOKOSC_EKRANU - 20, 0);
 
             // rysowanie cegielek
             int i, j;
@@ -148,8 +154,7 @@ int main()
                     cegielki[j][i].wytrzymalosc = 1;
                     cegielki[j][i].x_pozycja = j * SZEROKOSC_CEGIELKI;
                     cegielki[j][i].y_pozycja = i * WYSOKOSC_CEGIELKI;
-                    //al_draw_bitmap(cegielki[j][i].cegla, cegielki[j][i].x_pozycja, cegielki[j][i].y_pozycja, 0);
-                    //puts("HALO HALO HALO HALO HALO HALO ");
+                    al_draw_bitmap(grafiki.cegla, cegielki[j][i].x_pozycja, cegielki[j][i].y_pozycja, 0);
                 }
             }
             al_flip_display();
@@ -163,9 +168,9 @@ int main()
     al_destroy_timer(timer);
     al_destroy_event_queue(queue);
 
-    al_destroy_bitmap(gracz.grafika);
-    al_destroy_bitmap(ustawienia_gry.tlo);
-    //al_destroy_bitmap(cegielki.cegla);
+    al_destroy_bitmap(grafiki.platforma);
+    al_destroy_bitmap(grafiki.tlo);
+    al_destroy_bitmap(grafiki.cegla);
 
     return 0;
 }
