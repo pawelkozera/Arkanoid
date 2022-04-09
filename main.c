@@ -85,10 +85,11 @@ int main()
     struct Gracz gracz = {3, 5, (int) SZEROKOSC_EKRANU/2};
 
     // Ustawienia gry
-    struct Ustawienia_gry ustawienia_gry = {0, false};
+    struct Ustawienia_gry ustawienia_gry = {1, false};
 
     // Ustawienia cegielek
-    struct Cegielki cegielki[10][4] = {1, 0, 0};
+    srand(NULL);
+    struct Cegielki cegielki[10][4] = {1 + rand()%ustawienia_gry.poziom_gry, 0, 0};
 
     // Ustawienia grafik gry
     struct Grafiki grafiki = {al_load_bitmap("obrazki/tlo.png"), al_load_bitmap("obrazki/platforma_gracza.png"), al_load_bitmap("obrazki/cegla.png")};
