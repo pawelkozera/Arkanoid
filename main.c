@@ -81,18 +81,25 @@ int main()
         return 1;
     }
 
-    // Ustawienia gracza
-    struct Gracz gracz = {3, 5, (int) SZEROKOSC_EKRANU/2};
+    // Ustawienia grafik gry
+    struct Grafiki grafiki = {al_load_bitmap("obrazki/tlo.png"), al_load_bitmap("obrazki/platforma_gracza.png"), al_load_bitmap("obrazki/cegla.png")};
 
     // Ustawienia gry
     struct Ustawienia_gry ustawienia_gry = {1, false};
 
-    // Ustawienia cegielek
-    srand(NULL);
-    struct Cegielki cegielki[10][4] = {1 + rand()%ustawienia_gry.poziom_gry, 0, 0};
+    // Ustawienia gracza
+    struct Gracz gracz = {3, 5, (int) SZEROKOSC_EKRANU/2};
 
-    // Ustawienia grafik gry
-    struct Grafiki grafiki = {al_load_bitmap("obrazki/tlo.png"), al_load_bitmap("obrazki/platforma_gracza.png"), al_load_bitmap("obrazki/cegla.png")};
+    // Ustawienia cegielek
+    struct Cegielki cegielki[10][4];
+    srand(NULL);
+    for(int i = 0; i < 4; i++) {
+        for(int j = 0; j < 10; j++) {
+            cegielki[j][i].wytrzymalosc = 1 + rand()%ustawienia_gry.poziom_gry;
+            cegielki[j][i].x_pozycja = j * SZEROKOSC_CEGIELKI;
+            cegielki[j][i].y_pozycja = i * WYSOKOSC_CEGIELKI;
+        }
+    }
 
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
@@ -147,17 +154,12 @@ int main()
             al_draw_bitmap(grafiki.platforma, gracz.x_pozycja, WYSOKOSC_EKRANU - 20, 0);
 
             // rysowanie cegielek
-            int i, j;
-            for(i = 0; i < 4; i++)
-            {
-                for(j = 0; j < 10; j++)
-                {
-                    cegielki[j][i].wytrzymalosc = 1;
-                    cegielki[j][i].x_pozycja = j * SZEROKOSC_CEGIELKI;
-                    cegielki[j][i].y_pozycja = i * WYSOKOSC_CEGIELKI;
+            for(int i = 0; i < 4; i++) {
+                for(int j = 0; j < 10; j++) {
                     al_draw_bitmap(grafiki.cegla, cegielki[j][i].x_pozycja, cegielki[j][i].y_pozycja, 0);
                 }
             }
+
             al_flip_display();
 
             redraw = false;
