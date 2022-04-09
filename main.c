@@ -60,6 +60,25 @@ int ruch_w_lewo(int x_gracz, int szybkosc_gracza) {
     return x_gracz;
 }
 
+void inicjalizacja_cegielek(struct Cegielki cegielki[10][4], struct Ustawienia_gry ustawienia_gry) {
+    srand(NULL);
+    for(int i = 0; i < 4; i++) {
+        for(int j = 0; j < 10; j++) {
+            cegielki[j][i].wytrzymalosc = 1 + rand()%ustawienia_gry.poziom_gry;
+            cegielki[j][i].x_pozycja = j * SZEROKOSC_CEGIELKI;
+            cegielki[j][i].y_pozycja = i * WYSOKOSC_CEGIELKI;
+        }
+    }
+}
+
+void rysowanie_cegielek(struct Cegielki cegielki[10][4], struct Grafiki grafiki) {
+    for(int i = 0; i < 4; i++) {
+        for(int j = 0; j < 10; j++) {
+            al_draw_bitmap(grafiki.cegla, cegielki[j][i].x_pozycja, cegielki[j][i].y_pozycja, 0);
+        }
+    }
+}
+
 int main()
 {
     al_init();
@@ -92,14 +111,7 @@ int main()
 
     // Ustawienia cegielek
     struct Cegielki cegielki[10][4];
-    srand(NULL);
-    for(int i = 0; i < 4; i++) {
-        for(int j = 0; j < 10; j++) {
-            cegielki[j][i].wytrzymalosc = 1 + rand()%ustawienia_gry.poziom_gry;
-            cegielki[j][i].x_pozycja = j * SZEROKOSC_CEGIELKI;
-            cegielki[j][i].y_pozycja = i * WYSOKOSC_CEGIELKI;
-        }
-    }
+    inicjalizacja_cegielek(cegielki, ustawienia_gry);
 
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
@@ -154,11 +166,8 @@ int main()
             al_draw_bitmap(grafiki.platforma, gracz.x_pozycja, WYSOKOSC_EKRANU - 20, 0);
 
             // rysowanie cegielek
-            for(int i = 0; i < 4; i++) {
-                for(int j = 0; j < 10; j++) {
-                    al_draw_bitmap(grafiki.cegla, cegielki[j][i].x_pozycja, cegielki[j][i].y_pozycja, 0);
-                }
-            }
+            rysowanie_cegielek(cegielki, grafiki);
+
 
             al_flip_display();
 
