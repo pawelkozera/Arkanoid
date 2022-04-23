@@ -34,10 +34,16 @@ struct Cegielki {
     int y_pozycja;
 };
 
+struct Pilka {
+    int x, y, szybkosc;
+    bool ruch_lewo, ruch_dol;
+};
+
 struct Grafiki {
     ALLEGRO_BITMAP* tlo;
     ALLEGRO_BITMAP* platforma;
     ALLEGRO_BITMAP* cegla;
+    ALLEGRO_BITMAP* pilka;
 };
 
 // ruch_w_prawo(int pozycja_obiektu, int szybkosc_przesuwania, int szerokosc_obiektu)
@@ -79,6 +85,39 @@ void rysowanie_cegielek(struct Cegielki cegielki[10][4], struct Grafiki grafiki)
     }
 }
 
+int ruch_pilki_x(struct Pilka pilka) {
+    if (pilka.ruch_lewo) {
+        return pilka.x -= pilka.szybkosc;
+    }
+    else {
+        return pilka.x += pilka.szybkosc;
+    }
+}
+
+int ruch_pilki_y(struct Pilka pilka) {
+    if (pilka.ruch_dol) {
+        return pilka.y += pilka.szybkosc;
+    }
+    else {
+        return pilka.y -= pilka.szybkosc;
+    }
+}
+
+void pilka_kolizja_z_ramka(struct Pilka *pilka) {
+    if (pilka->y >= WYSOKOSC_EKRANU) { // to bedzie warunek przegranej na pozniej !!!!!!!!!!
+        pilka->ruch_dol = false;
+    }
+    if (pilka->y <= 0) {
+        pilka->ruch_dol = true;
+    }
+    if (pilka->x >= SZEROKOSC_EKRANU) {
+        pilka->ruch_lewo = true;
+    }
+    if (pilka->x <= 0) {
+        pilka->ruch_lewo = false;
+    }
+}
+
 int main()
 {
     al_init();
@@ -101,13 +140,16 @@ int main()
     }
 
     // Ustawienia grafik gry
-    struct Grafiki grafiki = {al_load_bitmap("obrazki/tlo.png"), al_load_bitmap("obrazki/platforma_gracza.png"), al_load_bitmap("obrazki/cegla.png")};
+    struct Grafiki grafiki = {al_load_bitmap("obrazki/tlo.png"), al_load_bitmap("obrazki/platforma_gracza.png"), al_load_bitmap("obrazki/cegla.png"), al_load_bitmap("obrazki/pilka.png")};
 
     // Ustawienia gry
     struct Ustawienia_gry ustawienia_gry = {1, false};
 
     // Ustawienia gracza
     struct Gracz gracz = {3, 5, (int) SZEROKOSC_EKRANU/2};
+
+    // Ustawienia pilki
+    struct Pilka pilka = {(int) SZEROKOSC_EKRANU/2, (int) WYSOKOSC_EKRANU/2, 3, false, true};
 
     // Ustawienia cegielek
     struct Cegielki cegielki[10][4];
@@ -157,6 +199,11 @@ int main()
             break;
         }
 
+        // pilka sterowanie
+        pilka_kolizja_z_ramka(&pilka);
+        pilka.x = ruch_pilki_x(pilka);
+        pilka.y = ruch_pilki_y(pilka);
+
         if (redraw && al_is_event_queue_empty(queue))
         {
             // rysowanie tla
@@ -167,6 +214,9 @@ int main()
 
             // rysowanie cegielek
             rysowanie_cegielek(cegielki, grafiki);
+
+            // rysowanie pilki
+            al_draw_bitmap(grafiki.pilka, pilka.x, pilka.y, 0);
 
 
             al_flip_display();
