@@ -9,6 +9,8 @@
 #define WYSOKOSC_EKRANU 600
 #define SZEROKOSC_CEGIELKI 80
 #define WYSOKOSC_CEGIELKI 50
+#define KOLUMNA_CEGIELEK 4
+#define WIERSZ_CEGIELEK 10
 #define KEY_SEEN     1
 #define KEY_RELEASED 2
 
@@ -66,21 +68,21 @@ int ruch_w_lewo(int x_gracz, int szybkosc_gracza) {
     return x_gracz;
 }
 
-void inicjalizacja_cegielek(struct Cegielki cegielki[10][4], struct Ustawienia_gry ustawienia_gry) {
+void inicjalizacja_cegielek(struct Cegielki *cegielki, struct Ustawienia_gry ustawienia_gry) {
     srand(NULL);
-    for(int i = 0; i < 4; i++) {
-        for(int j = 0; j < 10; j++) {
-            cegielki[j][i].wytrzymalosc = 1 + rand()%ustawienia_gry.poziom_gry;
-            cegielki[j][i].x_pozycja = j * SZEROKOSC_CEGIELKI;
-            cegielki[j][i].y_pozycja = i * WYSOKOSC_CEGIELKI;
+    for(int i = 0; i < KOLUMNA_CEGIELEK; i++) {
+        for(int j = 0; j < WIERSZ_CEGIELEK; j++) {
+            cegielki[i*WIERSZ_CEGIELEK + j].wytrzymalosc = 1 + rand()%ustawienia_gry.poziom_gry;
+            cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja = j * SZEROKOSC_CEGIELKI;
+            cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja = i * WYSOKOSC_CEGIELKI;
         }
     }
 }
 
-void rysowanie_cegielek(struct Cegielki cegielki[10][4], struct Grafiki grafiki) {
-    for(int i = 0; i < 4; i++) {
-        for(int j = 0; j < 10; j++) {
-            al_draw_bitmap(grafiki.cegla, cegielki[j][i].x_pozycja, cegielki[j][i].y_pozycja, 0);
+void rysowanie_cegielek(struct Cegielki *cegielki, struct Grafiki grafiki) {
+    for(int i = 0; i < KOLUMNA_CEGIELEK; i++) {
+        for(int j = 0; j < WIERSZ_CEGIELEK; j++) {
+            al_draw_bitmap(grafiki.cegla, cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja, cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja, 0);
         }
     }
 }
@@ -152,7 +154,7 @@ int main()
     struct Pilka pilka = {(int) SZEROKOSC_EKRANU/2, (int) WYSOKOSC_EKRANU/2, 3, false, true};
 
     // Ustawienia cegielek
-    struct Cegielki cegielki[10][4];
+    struct Cegielki *cegielki = (struct Cegielki *)malloc(WIERSZ_CEGIELEK * KOLUMNA_CEGIELEK * sizeof(struct Cegielki));
     inicjalizacja_cegielek(cegielki, ustawienia_gry);
 
     unsigned char key[ALLEGRO_KEY_MAX];
@@ -168,6 +170,11 @@ int main()
         switch(event.type)
         {
             case ALLEGRO_EVENT_TIMER:
+                // pilka sterowanie
+                pilka_kolizja_z_ramka(&pilka);
+                pilka.x = ruch_pilki_x(pilka);
+                pilka.y = ruch_pilki_y(pilka);
+
                 if(key[ALLEGRO_KEY_LEFT])
                     gracz.x_pozycja = ruch_w_lewo(gracz.x_pozycja, gracz.szybkosc_gracza);
                 if(key[ALLEGRO_KEY_RIGHT])
@@ -198,11 +205,6 @@ int main()
         if (ustawienia_gry.zakoncz_program) {
             break;
         }
-
-        // pilka sterowanie
-        pilka_kolizja_z_ramka(&pilka);
-        pilka.x = ruch_pilki_x(pilka);
-        pilka.y = ruch_pilki_y(pilka);
 
         if (redraw && al_is_event_queue_empty(queue))
         {
