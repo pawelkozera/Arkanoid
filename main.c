@@ -46,7 +46,7 @@ struct Pilka {
 struct Grafiki {
     ALLEGRO_BITMAP* tlo;
     ALLEGRO_BITMAP* platforma;
-    ALLEGRO_BITMAP* cegla;
+    ALLEGRO_BITMAP* cegla_zi1;
     ALLEGRO_BITMAP* pilka;
 };
 
@@ -84,7 +84,7 @@ void inicjalizacja_cegielek(struct Cegielki *cegielki, struct Ustawienia_gry ust
 void rysowanie_cegielek(struct Cegielki *cegielki, struct Grafiki grafiki) {
     for(int i = 0; i < KOLUMNA_CEGIELEK; i++) {
         for(int j = 0; j < WIERSZ_CEGIELEK; j++) {
-            al_draw_bitmap(grafiki.cegla, cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja, cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja, 0);
+            al_draw_bitmap(grafiki.cegla_zi1, cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja, cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja, 0);
         }
     }
 }
@@ -295,7 +295,7 @@ int main()
     }
 
     // Ustawienia grafik gry
-    struct Grafiki grafiki = {al_load_bitmap("obrazki/tlo.png"), al_load_bitmap("obrazki/platforma_gracza.png"), al_load_bitmap("obrazki/cegla.png"), al_load_bitmap("obrazki/pilka.png")};
+    struct Grafiki grafiki = {al_load_bitmap("obrazki/tlo.png"), al_load_bitmap("obrazki/platforma_gracza.png"), al_load_bitmap("obrazki/cegla_zi1.png"), al_load_bitmap("obrazki/pilka.png")};
 
     // Ustawienia gry
     struct Ustawienia_gry ustawienia_gry = {1, false};
