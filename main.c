@@ -424,7 +424,7 @@ int main()
 
     al_destroy_bitmap(grafiki.platforma);
     al_destroy_bitmap(grafiki.tlo);
-    al_destroy_bitmap(grafiki.cegla);
+    al_destroy_bitmap(grafiki.cegla_zi1);
 
     return 0;
 }
