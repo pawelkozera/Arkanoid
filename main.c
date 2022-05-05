@@ -9,8 +9,8 @@
 #define WYSOKOSC_EKRANU 600
 #define SZEROKOSC_CEGIELKI 101
 #define WYSOKOSC_CEGIELKI 76
-#define KOLUMNA_CEGIELEK 2
-#define WIERSZ_CEGIELEK 4
+#define KOLUMNA_CEGIELEK 3
+#define WIERSZ_CEGIELEK 8
 #define KEY_SEEN     1
 #define KEY_RELEASED 2
 
@@ -36,6 +36,7 @@ struct Cegielki {
     int wytrzymalosc;
     int x_pozycja;
     int y_pozycja;
+    int typ_cegly;
 };
 
 struct Pilka {
@@ -47,6 +48,11 @@ struct Grafiki {
     ALLEGRO_BITMAP* tlo;
     ALLEGRO_BITMAP* platforma;
     ALLEGRO_BITMAP* cegla_zi1;
+    ALLEGRO_BITMAP* cegla_zo1;
+    ALLEGRO_BITMAP* cegla_zo2;
+    ALLEGRO_BITMAP* cegla_cz1;
+    ALLEGRO_BITMAP* cegla_cz2;
+    ALLEGRO_BITMAP* cegla_cz3;
     ALLEGRO_BITMAP* pilka;
 };
 
@@ -71,10 +77,16 @@ int ruch_w_lewo(int x_gracz, int szybkosc_gracza) {
 }
 
 void inicjalizacja_cegielek(struct Cegielki *cegielki, struct Ustawienia_gry ustawienia_gry) {
-    srand(NULL);
+    srand(time(NULL));
+    int hp = 1;
     for(int i = 0; i < KOLUMNA_CEGIELEK; i++) {
         for(int j = 0; j < WIERSZ_CEGIELEK; j++) {
-            cegielki[i*WIERSZ_CEGIELEK + j].wytrzymalosc = 1 + rand()%ustawienia_gry.poziom_gry;
+            hp = 1 + rand()%ustawienia_gry.poziom_gry;
+            if (hp > 3) {
+                hp = 3;
+            }
+            cegielki[i*WIERSZ_CEGIELEK + j].wytrzymalosc = hp;
+            cegielki[i*WIERSZ_CEGIELEK + j].typ_cegly = hp;
             cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja = j * SZEROKOSC_CEGIELKI;
             cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja = i * WYSOKOSC_CEGIELKI;
         }
@@ -84,7 +96,28 @@ void inicjalizacja_cegielek(struct Cegielki *cegielki, struct Ustawienia_gry ust
 void rysowanie_cegielek(struct Cegielki *cegielki, struct Grafiki grafiki) {
     for(int i = 0; i < KOLUMNA_CEGIELEK; i++) {
         for(int j = 0; j < WIERSZ_CEGIELEK; j++) {
-            al_draw_bitmap(grafiki.cegla_zi1, cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja, cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja, 0);
+            if (cegielki[i*WIERSZ_CEGIELEK + j].typ_cegly == 1 && cegielki[i*WIERSZ_CEGIELEK + j].wytrzymalosc == 1) {
+                al_draw_bitmap(grafiki.cegla_zi1, cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja, cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja, 0);
+            }
+            else if (cegielki[i*WIERSZ_CEGIELEK + j].typ_cegly == 2) {
+                if (cegielki[i*WIERSZ_CEGIELEK + j].wytrzymalosc == 2) {
+                    al_draw_bitmap(grafiki.cegla_zo2, cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja, cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja, 0);
+                }
+                else if (cegielki[i*WIERSZ_CEGIELEK + j].wytrzymalosc == 1) {
+                    al_draw_bitmap(grafiki.cegla_zo1, cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja, cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja, 0);
+                }
+            }
+            else if (cegielki[i*WIERSZ_CEGIELEK + j].typ_cegly == 3) {
+                if (cegielki[i*WIERSZ_CEGIELEK + j].wytrzymalosc == 3) {
+                    al_draw_bitmap(grafiki.cegla_cz3, cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja, cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja, 0);
+                }
+                else if (cegielki[i*WIERSZ_CEGIELEK + j].wytrzymalosc == 2) {
+                    al_draw_bitmap(grafiki.cegla_cz2, cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja, cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja, 0);
+                }
+                else if (cegielki[i*WIERSZ_CEGIELEK + j].wytrzymalosc == 1){
+                    al_draw_bitmap(grafiki.cegla_cz1, cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja, cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja, 0);
+                }
+            }
         }
     }
 }
@@ -273,6 +306,29 @@ struct Cegielki* szukaj_w_drzewie(struct QuadTree *quadTree, struct Pilka *pilka
     }
 }
 
+void kolizja_cegla(struct Cegielki *trafiona_cegielka, struct Pilka *pilka) {
+    trafiona_cegielka->wytrzymalosc -= 1;
+
+    // od dolu
+    if (pilka->y >= trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - 2) {
+        pilka->ruch_dol = true;
+    }
+
+    // od gory
+    if (pilka->y == trafiona_cegielka->y_pozycja) {
+        pilka->ruch_dol = false;
+    }
+
+    // od prawej
+    if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - 2 && pilka->x > trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2) {
+        pilka->ruch_lewo = false;
+    }
+    // od lewej
+    else if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI) {
+        pilka->ruch_lewo = true;
+    }
+}
+
 int main()
 {
     al_init();
@@ -295,10 +351,12 @@ int main()
     }
 
     // Ustawienia grafik gry
-    struct Grafiki grafiki = {al_load_bitmap("obrazki/tlo.png"), al_load_bitmap("obrazki/platforma_gracza.png"), al_load_bitmap("obrazki/cegla_zi1.png"), al_load_bitmap("obrazki/pilka.png")};
+    struct Grafiki grafiki = {al_load_bitmap("obrazki/tlo.png"), al_load_bitmap("obrazki/platforma_gracza.png"), al_load_bitmap("obrazki/cegla_zi1.png"), al_load_bitmap("obrazki/cegla_zo1.png"),
+                                al_load_bitmap("obrazki/cegla_zo2.png"), al_load_bitmap("obrazki/cegla_cz1.png"), al_load_bitmap("obrazki/cegla_cz2.png"),
+                                al_load_bitmap("obrazki/cegla_cz3.png"), al_load_bitmap("obrazki/pilka.png")};
 
     // Ustawienia gry
-    struct Ustawienia_gry ustawienia_gry = {1, false};
+    struct Ustawienia_gry ustawienia_gry = {3, false};
 
     // Ustawienia gracza
     struct Gracz gracz = {3, 5, (int) SZEROKOSC_EKRANU/2, WYSOKOSC_EKRANU - 20, 50};
@@ -329,31 +387,10 @@ int main()
             }
         }
 
-        // testowanie
-        for(int i = 0; i < KOLUMNA_CEGIELEK; i++) {
-            for(int j = 0; j < WIERSZ_CEGIELEK; j++) {
-                struct Pilka p_test = {cegielki[i*WIERSZ_CEGIELEK + j].x_pozycja + 100, cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja + 37, 3, false, true};
-                if (szukaj_w_drzewie(quadTree, &p_test)) {
-                    //printf("%d\n", p_test.x);
-                }
-            }
-        }
-
         struct Cegielki *trafiona_cegielka = szukaj_w_drzewie(quadTree, &pilka);
-        if (trafiona_cegielka != NULL) {
-            if (pilka.ruch_dol) {
-                pilka.ruch_dol = false;
-            }
-            else {
-                pilka.ruch_dol = true;
-            }
-            if (pilka.ruch_lewo) {
-                pilka.ruch_lewo = false;
-            }
-            else {
-                pilka.ruch_lewo = true;
-            }
-            printf("%d\n", trafiona_cegielka->x_pozycja);
+        if (trafiona_cegielka != NULL && trafiona_cegielka->wytrzymalosc > 0) {
+            printf("%d %d\n", trafiona_cegielka->x_pozycja, pilka.x);
+            kolizja_cegla(trafiona_cegielka, &pilka);
         }
 
         switch(event.type)
@@ -409,7 +446,6 @@ int main()
 
             // rysowanie pilki
             al_draw_bitmap(grafiki.pilka, pilka.x, pilka.y, 0);
-
 
             al_flip_display();
 
