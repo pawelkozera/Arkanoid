@@ -4,6 +4,8 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 #define SZEROKOSC_EKRANU 800
 #define WYSOKOSC_EKRANU 600
@@ -141,30 +143,38 @@ int ruch_pilki_y(struct Pilka pilka) {
 }
 
 void pilka_kolizja_z_ramka(struct Pilka *pilka) {
+    ALLEGRO_SAMPLE* hit_sound1 = al_load_sample("hit_sound1.wav");
     if (pilka->y >= WYSOKOSC_EKRANU) { // to bedzie warunek przegranej na pozniej !!!!!!!!!!
         pilka->ruch_dol = false;
+        al_play_sample(hit_sound1, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
     if (pilka->y <= 0) {
         pilka->ruch_dol = true;
+        al_play_sample(hit_sound1, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
     if (pilka->x >= SZEROKOSC_EKRANU) {
         pilka->ruch_lewo = true;
+        al_play_sample(hit_sound1, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
     if (pilka->x <= 0) {
         pilka->ruch_lewo = false;
+        al_play_sample(hit_sound1, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
 }
 
 void pilka_kolizja_z_graczem(struct Pilka *pilka, struct Gracz gracz) {
     bool pilka_w_szerokosci_platformy = pilka->x >= gracz.x_pozycja && pilka->x <= gracz.x_pozycja + gracz.szerokosc_platformy;
     bool pilka_na_wysokosci_platformy = pilka->y + 9 >= WYSOKOSC_EKRANU - 20; // 9 = wysokosc pilki
+    ALLEGRO_SAMPLE* hit_sound1 = al_load_sample("hit_sound1.wav");
 
     if (pilka_w_szerokosci_platformy && pilka_na_wysokosci_platformy) {
         if (pilka->ruch_dol) {
             pilka->ruch_dol = false;
+            al_play_sample(hit_sound1, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
         }
         else {
             pilka->ruch_dol = true;
+            al_play_sample(hit_sound1, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
         }
     }
 }
@@ -308,24 +318,29 @@ struct Cegielki* szukaj_w_drzewie(struct QuadTree *quadTree, struct Pilka *pilka
 
 void kolizja_cegla(struct Cegielki *trafiona_cegielka, struct Pilka *pilka) {
     trafiona_cegielka->wytrzymalosc -= 1;
+    ALLEGRO_SAMPLE* hit_sound2 = al_load_sample("hit_sound2.wav");
 
     // od dolu
     if (pilka->y >= trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - 2) {
         pilka->ruch_dol = true;
+        al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
 
     // od gory
     if (pilka->y == trafiona_cegielka->y_pozycja) {
         pilka->ruch_dol = false;
+        al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
 
     // od prawej
     if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - 2 && pilka->x > trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2) {
         pilka->ruch_lewo = false;
+        al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
     // od lewej
     else if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI) {
         pilka->ruch_lewo = true;
+        al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
 }
 
@@ -342,6 +357,15 @@ int main()
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_display_event_source(disp));
     al_register_event_source(queue, al_get_timer_event_source(timer));
+
+    al_install_audio(), "audio";
+    al_init_acodec_addon(), "audio codecs";
+    al_reserve_samples(16), "reserve samples";
+
+    ALLEGRO_SAMPLE* music = al_load_sample("music.wav");
+    ALLEGRO_SAMPLE* hit_sound1 = al_load_sample("hit_sound1.wav");
+    ALLEGRO_SAMPLE* hit_sound2 = al_load_sample("hit_sound2.wav");
+    al_play_sample(music, 0.10, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 
     ALLEGRO_EVENT event;
 
@@ -461,6 +485,9 @@ int main()
     al_destroy_bitmap(grafiki.platforma);
     al_destroy_bitmap(grafiki.tlo);
     al_destroy_bitmap(grafiki.cegla_zi1);
+    al_destroy_sample(music);
+    al_destroy_sample(hit_sound1);
+    al_destroy_sample(hit_sound2);
 
     return 0;
 }
