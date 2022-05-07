@@ -142,8 +142,7 @@ int ruch_pilki_y(struct Pilka pilka) {
     }
 }
 
-void pilka_kolizja_z_ramka(struct Pilka *pilka) {
-    ALLEGRO_SAMPLE* hit_sound1 = al_load_sample("hit_sound1.wav");
+void pilka_kolizja_z_ramka(struct Pilka *pilka, ALLEGRO_SAMPLE* hit_sound1) {
     if (pilka->y >= WYSOKOSC_EKRANU) { // to bedzie warunek przegranej na pozniej !!!!!!!!!!
         pilka->ruch_dol = false;
         al_play_sample(hit_sound1, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
@@ -162,10 +161,9 @@ void pilka_kolizja_z_ramka(struct Pilka *pilka) {
     }
 }
 
-void pilka_kolizja_z_graczem(struct Pilka *pilka, struct Gracz gracz) {
+void pilka_kolizja_z_graczem(struct Pilka *pilka, struct Gracz gracz, ALLEGRO_SAMPLE* hit_sound1) {
     bool pilka_w_szerokosci_platformy = pilka->x >= gracz.x_pozycja && pilka->x <= gracz.x_pozycja + gracz.szerokosc_platformy;
     bool pilka_na_wysokosci_platformy = pilka->y + 9 >= WYSOKOSC_EKRANU - 20; // 9 = wysokosc pilki
-    ALLEGRO_SAMPLE* hit_sound1 = al_load_sample("hit_sound1.wav");
 
     if (pilka_w_szerokosci_platformy && pilka_na_wysokosci_platformy) {
         if (pilka->ruch_dol) {
@@ -316,30 +314,32 @@ struct Cegielki* szukaj_w_drzewie(struct QuadTree *quadTree, struct Pilka *pilka
     }
 }
 
-void kolizja_cegla(struct Cegielki *trafiona_cegielka, struct Pilka *pilka) {
+void kolizja_cegla(struct Cegielki *trafiona_cegielka, struct Pilka *pilka, ALLEGRO_SAMPLE* hit_sound2) {
     trafiona_cegielka->wytrzymalosc -= 1;
-    ALLEGRO_SAMPLE* hit_sound2 = al_load_sample("hit_sound2.wav");
+    printf("c: %d p: %d\n", trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI, pilka->y);
 
     // od dolu
-    if (pilka->y >= trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - 2) {
+    if (pilka->y >= trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - pilka->szybkosc) {
+        puts("dol");
         pilka->ruch_dol = true;
         al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
-
-    // od gory
-    if (pilka->y == trafiona_cegielka->y_pozycja) {
-        pilka->ruch_dol = false;
-        al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-    }
-
     // od prawej
-    if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - 2 && pilka->x > trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2) {
+    else if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI && pilka->x > trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2) {
+        puts("prawo");
         pilka->ruch_lewo = false;
         al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
     // od lewej
-    else if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI) {
+    else if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI && pilka->x < trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2) {
+        puts("lewo");
         pilka->ruch_lewo = true;
+        al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+    }
+    // od gory
+    else if (pilka->y <= trafiona_cegielka->y_pozycja + pilka->szybkosc) {
+        puts("gora");
+        pilka->ruch_dol = false;
         al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
 }
@@ -365,7 +365,7 @@ int main()
     ALLEGRO_SAMPLE* music = al_load_sample("music.wav");
     ALLEGRO_SAMPLE* hit_sound1 = al_load_sample("hit_sound1.wav");
     ALLEGRO_SAMPLE* hit_sound2 = al_load_sample("hit_sound2.wav");
-    al_play_sample(music, 0.10, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+    //al_play_sample(music, 0.10, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 
     ALLEGRO_EVENT event;
 
@@ -380,13 +380,13 @@ int main()
                                 al_load_bitmap("obrazki/cegla_cz3.png"), al_load_bitmap("obrazki/pilka.png")};
 
     // Ustawienia gry
-    struct Ustawienia_gry ustawienia_gry = {3, false};
+    struct Ustawienia_gry ustawienia_gry = {1, false};
 
     // Ustawienia gracza
     struct Gracz gracz = {3, 5, (int) SZEROKOSC_EKRANU/2, WYSOKOSC_EKRANU - 20, 50};
 
     // Ustawienia pilki
-    struct Pilka pilka = {200, 200, 3, false, true};
+    struct Pilka pilka = {180, 200, 4, false, true};
 
     // Ustawienia cegielek
     struct Cegielki *cegielki = (struct Cegielki *)malloc(WIERSZ_CEGIELEK * KOLUMNA_CEGIELEK * sizeof(struct Cegielki));
@@ -413,16 +413,15 @@ int main()
 
         struct Cegielki *trafiona_cegielka = szukaj_w_drzewie(quadTree, &pilka);
         if (trafiona_cegielka != NULL && trafiona_cegielka->wytrzymalosc > 0) {
-            printf("%d %d\n", trafiona_cegielka->x_pozycja, pilka.x);
-            kolizja_cegla(trafiona_cegielka, &pilka);
+            kolizja_cegla(trafiona_cegielka, &pilka, hit_sound2);
         }
 
         switch(event.type)
         {
             case ALLEGRO_EVENT_TIMER:
                 // pilka sterowanie
-                pilka_kolizja_z_ramka(&pilka);
-                pilka_kolizja_z_graczem(&pilka, gracz);
+                pilka_kolizja_z_ramka(&pilka, hit_sound1);
+                pilka_kolizja_z_graczem(&pilka, gracz, hit_sound1);
                 pilka.x = ruch_pilki_x(pilka);
                 pilka.y = ruch_pilki_y(pilka);
 
@@ -485,6 +484,12 @@ int main()
     al_destroy_bitmap(grafiki.platforma);
     al_destroy_bitmap(grafiki.tlo);
     al_destroy_bitmap(grafiki.cegla_zi1);
+    al_destroy_bitmap(grafiki.cegla_zo1);
+    al_destroy_bitmap(grafiki.cegla_zo2);
+    al_destroy_bitmap(grafiki.cegla_cz1);
+    al_destroy_bitmap(grafiki.cegla_cz2);
+    al_destroy_bitmap(grafiki.cegla_cz3);
+    al_destroy_bitmap(grafiki.pilka);
     al_destroy_sample(music);
     al_destroy_sample(hit_sound1);
     al_destroy_sample(hit_sound2);
