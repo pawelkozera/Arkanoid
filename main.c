@@ -344,6 +344,21 @@ void kolizja_cegla(struct Cegielki *trafiona_cegielka, struct Pilka *pilka, ALLE
     }
 }
 
+void narysuj_interfejs(ALLEGRO_FONT* font, struct Gracz gracz, struct Ustawienia_gry ustawienia_gry) {
+    char komunikat_zycie[20] = "Ilosc zyc: ";
+    char ilosc_zyc[2];
+    sprintf(ilosc_zyc, "%d", gracz.zycie);
+    strncat(komunikat_zycie, ilosc_zyc, 2);
+
+    char komunikat_poziom[20] = "Poziom: ";
+    char poziom[2];
+    sprintf(poziom, "%d", ustawienia_gry.poziom_gry);
+    strncat(komunikat_poziom, poziom, 2);
+
+    al_draw_text(font, al_map_rgb(255, 255, 255), 50, WYSOKOSC_EKRANU - 100, 0, komunikat_zycie);
+    al_draw_text(font, al_map_rgb(255, 255, 255), 200, WYSOKOSC_EKRANU - 100, 0, komunikat_poziom);
+}
+
 int main()
 {
     al_init();
@@ -365,7 +380,7 @@ int main()
     ALLEGRO_SAMPLE* music = al_load_sample("music.wav");
     ALLEGRO_SAMPLE* hit_sound1 = al_load_sample("hit_sound1.wav");
     ALLEGRO_SAMPLE* hit_sound2 = al_load_sample("hit_sound2.wav");
-    //al_play_sample(music, 0.10, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+    //al_play_sample(music, 0.02, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 
     ALLEGRO_EVENT event;
 
@@ -460,6 +475,9 @@ int main()
         {
             // rysowanie tla
             al_draw_bitmap(grafiki.tlo, 0, 0, 0);
+
+            // rysowanie interfejsu
+            narysuj_interfejs(font, gracz, ustawienia_gry);
 
             // rysowanie platformy gracza
             al_draw_bitmap(grafiki.platforma, gracz.x_pozycja, gracz.y_pozycja, 0);
