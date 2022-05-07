@@ -32,6 +32,7 @@ struct Gracz {
     int x_pozycja;
     int y_pozycja;
     int szerokosc_platformy;
+    int ilosc_punktow;
 };
 
 struct Cegielki {
@@ -163,7 +164,7 @@ void pilka_kolizja_z_ramka(struct Pilka *pilka, ALLEGRO_SAMPLE* hit_sound1) {
 
 void pilka_kolizja_z_graczem(struct Pilka *pilka, struct Gracz gracz, ALLEGRO_SAMPLE* hit_sound1) {
     bool pilka_w_szerokosci_platformy = pilka->x >= gracz.x_pozycja && pilka->x <= gracz.x_pozycja + gracz.szerokosc_platformy;
-    bool pilka_na_wysokosci_platformy = pilka->y + 9 >= WYSOKOSC_EKRANU - 20; // 9 = wysokosc pilki
+    bool pilka_na_wysokosci_platformy = pilka->y + 10 >= WYSOKOSC_EKRANU - 20;
 
     if (pilka_w_szerokosci_platformy && pilka_na_wysokosci_platformy) {
         if (pilka->ruch_dol) {
@@ -344,6 +345,18 @@ void kolizja_cegla(struct Cegielki *trafiona_cegielka, struct Pilka *pilka, ALLE
     }
 }
 
+void dodaj_punkty(struct Gracz *gracz, struct Cegielki *trafiona_cegla) {
+    if (trafiona_cegla->typ_cegly == 3 && trafiona_cegla->wytrzymalosc == 0) {
+        gracz->ilosc_punktow += 150;
+    }
+    else if (trafiona_cegla->typ_cegly == 2 && trafiona_cegla->wytrzymalosc == 0) {
+        gracz->ilosc_punktow += 100;
+    }
+    else {
+        gracz->ilosc_punktow += 50;
+    }
+}
+
 void narysuj_interfejs(ALLEGRO_FONT* font, struct Gracz gracz, struct Ustawienia_gry ustawienia_gry) {
     char komunikat_zycie[20] = "Ilosc zyc: ";
     char ilosc_zyc[2];
@@ -355,8 +368,14 @@ void narysuj_interfejs(ALLEGRO_FONT* font, struct Gracz gracz, struct Ustawienia
     sprintf(poziom, "%d", ustawienia_gry.poziom_gry);
     strncat(komunikat_poziom, poziom, 2);
 
+    char komunikat_punkty[20] = "Punkty: ";
+    char punkty[10];
+    sprintf(punkty, "%d", gracz.ilosc_punktow);
+    strncat(komunikat_punkty, punkty, 10);
+
     al_draw_text(font, al_map_rgb(255, 255, 255), 50, WYSOKOSC_EKRANU - 100, 0, komunikat_zycie);
     al_draw_text(font, al_map_rgb(255, 255, 255), 200, WYSOKOSC_EKRANU - 100, 0, komunikat_poziom);
+    al_draw_text(font, al_map_rgb(255, 255, 255), 350, WYSOKOSC_EKRANU - 100, 0, komunikat_punkty);
 }
 
 int main()
@@ -395,10 +414,10 @@ int main()
                                 al_load_bitmap("obrazki/cegla_cz3.png"), al_load_bitmap("obrazki/pilka.png")};
 
     // Ustawienia gry
-    struct Ustawienia_gry ustawienia_gry = {1, false};
+    struct Ustawienia_gry ustawienia_gry = {3, false};
 
     // Ustawienia gracza
-    struct Gracz gracz = {3, 5, (int) SZEROKOSC_EKRANU/2, WYSOKOSC_EKRANU - 20, 50};
+    struct Gracz gracz = {3, 5, (int) SZEROKOSC_EKRANU/2, WYSOKOSC_EKRANU - 20, 50, 0};
 
     // Ustawienia pilki
     struct Pilka pilka = {180, 200, 4, false, true};
@@ -429,6 +448,7 @@ int main()
         struct Cegielki *trafiona_cegielka = szukaj_w_drzewie(quadTree, &pilka);
         if (trafiona_cegielka != NULL && trafiona_cegielka->wytrzymalosc > 0) {
             kolizja_cegla(trafiona_cegielka, &pilka, hit_sound2);
+            dodaj_punkty(&gracz, trafiona_cegielka);
         }
 
         switch(event.type)
