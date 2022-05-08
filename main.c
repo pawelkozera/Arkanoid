@@ -166,7 +166,7 @@ void pilka_kolizja_z_graczem(struct Pilka *pilka, struct Gracz gracz, ALLEGRO_SA
     bool pilka_w_szerokosci_platformy = pilka->x >= gracz.x_pozycja && pilka->x <= gracz.x_pozycja + gracz.szerokosc_platformy;
     bool pilka_na_wysokosci_platformy = pilka->y + 10 >= WYSOKOSC_EKRANU - 20;
 
-    if (pilka_w_szerokosci_platformy && pilka_na_wysokosci_platformy) {
+    if (pilka_w_szerokosci_platformy && pilka_na_wysokosci_platformy && pilka->ruch_dol) {
         if (pilka->ruch_dol) {
             pilka->ruch_dol = false;
             al_play_sample(hit_sound1, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
@@ -320,25 +320,25 @@ void kolizja_cegla(struct Cegielki *trafiona_cegielka, struct Pilka *pilka, ALLE
     printf("c: %d p: %d\n", trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI, pilka->y);
 
     // od dolu
-    if (pilka->y >= trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - pilka->szybkosc) {
+    if (pilka->y >= trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - pilka->szybkosc && !pilka->ruch_dol) {
         puts("dol");
         pilka->ruch_dol = true;
         al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
     // od prawej
-    else if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI && pilka->x > trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2) {
+    else if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI && pilka->x > trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2 && pilka->ruch_lewo) {
         puts("prawo");
         pilka->ruch_lewo = false;
         al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
     // od lewej
-    else if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI && pilka->x < trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2) {
+    else if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI && pilka->x < trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2 && !pilka->ruch_lewo) {
         puts("lewo");
         pilka->ruch_lewo = true;
         al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
     // od gory
-    else if (pilka->y <= trafiona_cegielka->y_pozycja + pilka->szybkosc) {
+    else if (pilka->y <= trafiona_cegielka->y_pozycja + pilka->szybkosc && pilka->ruch_dol) {
         puts("gora");
         pilka->ruch_dol = false;
         al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
