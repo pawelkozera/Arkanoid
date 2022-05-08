@@ -120,6 +120,7 @@ void przejscie_do_kolejnego_poziomu(struct Ustawienia_gry *ustawienia_gry, struc
 void narysuj_ekran_przegranej(ALLEGRO_FONT* font, struct Ustawienia_gry ustawienia_gry, struct Gracz gracz);
 void narysuj_menu(ALLEGRO_FONT* font, struct Przycisk przycisk);
 int sprawdz_nacisniecie_przycisku(int mysz_x, int mysz_y, struct Przycisk przyciski[]);
+void reset_gry(struct Gracz *gracz, struct Ustawienia_gry *ustawienia_gry, struct Pilka *pilka);
 
 struct Cegielki* szukaj_w_drzewie(struct QuadTree *quadTree, struct Pilka *pilka) {
     if (!czy_jest_w_granicy_pilka(quadTree, pilka)) {
@@ -205,7 +206,7 @@ int main()
                                 al_load_bitmap("obrazki/cegla_cz3.png"), al_load_bitmap("obrazki/pilka.png")};
 
     // Ustawienia gry
-    struct Ustawienia_gry ustawienia_gry = {1, WIERSZ_CEGIELEK*KOLUMNA_CEGIELEK, false, false, false};
+    struct Ustawienia_gry ustawienia_gry = {1, WIERSZ_CEGIELEK*KOLUMNA_CEGIELEK, false, true, false};
 
     // Ustawienia gracza
     struct Gracz gracz = {3, 5, (int) SZEROKOSC_EKRANU/2, WYSOKOSC_EKRANU - 20, 50, 0};
@@ -275,13 +276,17 @@ int main()
                     if (key[ALLEGRO_KEY_ESCAPE]) {
                         ustawienia_gry.wyswietl_menu = true;
                         ustawienia_gry.wyswietl_ekran_przegranej = false;
+                        reset_gry(&gracz, &ustawienia_gry, &pilka);
+                        inicjalizacja_cegielek(cegielki, ustawienia_gry);
+                    }
+                    if (key[ALLEGRO_KEY_ENTER]) {
+                        reset_gry(&gracz, &ustawienia_gry, &pilka);
+                        inicjalizacja_cegielek(cegielki, ustawienia_gry);
+                        ustawienia_gry.wyswietl_ekran_przegranej = false;
                     }
                 }
                 else {
                     // sterowanie dla menu
-                    al_clear_to_color(al_map_rgb(0, 0, 0));
-                    narysuj_menu(font, przycisk_graj);
-                    narysuj_menu(font, przycisk_wyjdz);
                 }
 
                 //if(key[ALLEGRO_KEY_ESCAPE])
@@ -306,10 +311,14 @@ int main()
                 break;
 
             case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-                if (event.mouse.button == 1 && wyswietlanie_gry) {
+                if (event.mouse.button == 1 && ustawienia_gry.wyswietl_menu) {
                     nacisniety_przycisk = sprawdz_nacisniecie_przycisku(event.mouse.x, event.mouse.y, przyciski);
-                    if (nacisniety_przycisk != -1) {
-                        wyswietlanie_gry = false;
+                    if (nacisniety_przycisk == 0) {
+                        ustawienia_gry.wyswietl_menu = false;
+                        ustawienia_gry.wyswietl_ekran_przegranej = false;
+                    }
+                    else if (nacisniety_przycisk == 1) {
+                        ustawienia_gry.zakoncz_program = true;
                     }
                 }
                 break;
@@ -346,24 +355,6 @@ int main()
                 narysuj_menu(font, przycisk_graj);
                 narysuj_menu(font, przycisk_wyjdz);
             }
-
-            /*if(wyswietlanie_gry)
-            {
-                // rysowanie tla
-                al_draw_bitmap(grafiki.tlo, 0, 0, 0);
-
-                // rysowanie interfejsu
-                narysuj_interfejs(font, gracz, ustawienia_gry);
-
-                // rysowanie platformy gracza
-                al_draw_bitmap(grafiki.platforma, gracz.x_pozycja, gracz.y_pozycja, 0);
-
-                // rysowanie cegielek
-                rysowanie_cegielek(cegielki, grafiki);
-
-                // rysowanie pilki
-                al_draw_bitmap(grafiki.pilka, pilka.x, pilka.y, 0);
-            }*/
 
             al_flip_display();
 
@@ -479,6 +470,8 @@ int ruch_pilki_y(struct Pilka pilka) {
 void pilka_kolizja_z_ramka(struct Pilka *pilka, struct Gracz *gracz, ALLEGRO_SAMPLE* hit_sound1) {
     if (pilka->y >= WYSOKOSC_EKRANU) {
         gracz->zycie--;
+        pilka->x = 180;
+        pilka->y = 300;
     }
     if (pilka->y <= 0) {
         pilka->ruch_dol = true;
@@ -509,7 +502,6 @@ void pilka_kolizja_z_graczem(struct Pilka *pilka, struct Gracz gracz, ALLEGRO_SA
         }
     }
 }
-
 
 bool czy_jest_w_granicy_cegly(struct QuadTree *quadTree, struct Cegielki *cegielka) {
     bool x_granica = cegielka->x_pozycja >= quadTree->lewy_x && cegielka->x_pozycja <= quadTree->prawy_x;
@@ -665,8 +657,8 @@ void narysuj_ekran_przegranej(ALLEGRO_FONT* font, struct Ustawienia_gry ustawien
     al_clear_to_color(al_map_rgb(0, 0, 0));
     al_draw_text(font, al_map_rgb(255, 255, 255), SZEROKOSC_EKRANU/3, WYSOKOSC_EKRANU/3, 0, komunikat_poziom);
     al_draw_text(font, al_map_rgb(255, 255, 255), SZEROKOSC_EKRANU/2, WYSOKOSC_EKRANU/3, 0, komunikat_punkty);
-    if(gracz.ilosc_punktow > 0)
-        al_draw_textf(font, al_map_rgb(255, 255, 255), SZEROKOSC_EKRANU/3, WYSOKOSC_EKRANU/2, 0, "Nacisnij [Enter]  aby kontynuowac");
+
+    al_draw_textf(font, al_map_rgb(255, 255, 255), SZEROKOSC_EKRANU/3, WYSOKOSC_EKRANU/2, 0, "Nacisnij [Enter]  aby kontynuowac");
     al_draw_textf(font, al_map_rgb(255, 255, 255), SZEROKOSC_EKRANU/3, WYSOKOSC_EKRANU/1.8, 0, "Nacisnij [Escape] aby wyjsc do menu");
 }
 
@@ -690,4 +682,15 @@ int sprawdz_nacisniecie_przycisku(int mysz_x, int mysz_y, struct Przycisk przyci
     }
 
     return -1;
+}
+
+void reset_gry(struct Gracz *gracz, struct Ustawienia_gry *ustawienia_gry, struct Pilka *pilka) {
+    gracz->ilosc_punktow = 0;
+    gracz->zycie = 3;
+    gracz->x_pozycja = SZEROKOSC_EKRANU/2;
+
+    ustawienia_gry->poziom_gry = 1;
+
+    pilka->x = 180;
+    pilka->y = 300;
 }
