@@ -12,8 +12,8 @@
 #define WYSOKOSC_EKRANU 600
 #define SZEROKOSC_CEGIELKI 101
 #define WYSOKOSC_CEGIELKI 76
-#define KOLUMNA_CEGIELEK 1
-#define WIERSZ_CEGIELEK 2
+#define KOLUMNA_CEGIELEK 3
+#define WIERSZ_CEGIELEK 8
 #define KEY_SEEN     1
 #define KEY_RELEASED 2
 #define ILOSC_PRZYCISKOW 2
@@ -104,7 +104,7 @@ struct Przycisk {
 //Prototypy funkcji
 int ruch_w_prawo(int x_gracz, int szybkosc_gracza, int szerokosc_gracza);
 int ruch_w_lewo(int x_gracz, int szybkosc_gracza);
-void inicjalizacja_cegielek(struct Cegielki *cegielki, struct Ustawienia_gry ustawienia_gry);
+void inicjalizacja_cegielek(struct Cegielki *cegielki, struct Ustawienia_gry *ustawienia_gry);
 void rysowanie_cegielek(struct Cegielki *cegielki, struct Grafiki grafiki);
 int ruch_pilki_x(struct Pilka pilka);
 int ruch_pilki_y(struct Pilka pilka);
@@ -216,7 +216,7 @@ int main()
 
     // Ustawienia cegielek
     struct Cegielki *cegielki = (struct Cegielki *)malloc(WIERSZ_CEGIELEK * KOLUMNA_CEGIELEK * sizeof(struct Cegielki));
-    inicjalizacja_cegielek(cegielki, ustawienia_gry);
+    inicjalizacja_cegielek(cegielki, &ustawienia_gry);
 
     unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
@@ -250,7 +250,7 @@ int main()
 
             if (ustawienia_gry.ilosc_cegiel_do_zbicia <= 0) {
                 przejscie_do_kolejnego_poziomu(&ustawienia_gry, &pilka, &gracz);
-                inicjalizacja_cegielek(cegielki, ustawienia_gry);
+                inicjalizacja_cegielek(cegielki, &ustawienia_gry);
             }
         }
 
@@ -277,11 +277,11 @@ int main()
                         ustawienia_gry.wyswietl_menu = true;
                         ustawienia_gry.wyswietl_ekran_przegranej = false;
                         reset_gry(&gracz, &ustawienia_gry, &pilka);
-                        inicjalizacja_cegielek(cegielki, ustawienia_gry);
+                        inicjalizacja_cegielek(cegielki, &ustawienia_gry);
                     }
                     if (key[ALLEGRO_KEY_ENTER]) {
                         reset_gry(&gracz, &ustawienia_gry, &pilka);
-                        inicjalizacja_cegielek(cegielki, ustawienia_gry);
+                        inicjalizacja_cegielek(cegielki, &ustawienia_gry);
                         ustawienia_gry.wyswietl_ekran_przegranej = false;
                     }
                 }
@@ -403,12 +403,12 @@ int ruch_w_lewo(int x_gracz, int szybkosc_gracza) {
     return x_gracz;
 }
 
-void inicjalizacja_cegielek(struct Cegielki *cegielki, struct Ustawienia_gry ustawienia_gry) {
+void inicjalizacja_cegielek(struct Cegielki *cegielki, struct Ustawienia_gry *ustawienia_gry) {
     srand(time(NULL));
     int hp = 1;
     for(int i = 0; i < KOLUMNA_CEGIELEK; i++) {
         for(int j = 0; j < WIERSZ_CEGIELEK; j++) {
-            hp = 1 + rand()%ustawienia_gry.poziom_gry;
+            hp = 1 + rand()%ustawienia_gry->poziom_gry;
             if (hp > 3) {
                 hp = 3;
             }
@@ -418,6 +418,7 @@ void inicjalizacja_cegielek(struct Cegielki *cegielki, struct Ustawienia_gry ust
             cegielki[i*WIERSZ_CEGIELEK + j].y_pozycja = i * WYSOKOSC_CEGIELKI;
         }
     }
+    ustawienia_gry->ilosc_cegiel_do_zbicia = KOLUMNA_CEGIELEK*WIERSZ_CEGIELEK;
 }
 
 void rysowanie_cegielek(struct Cegielki *cegielki, struct Grafiki grafiki) {
@@ -470,8 +471,11 @@ int ruch_pilki_y(struct Pilka pilka) {
 void pilka_kolizja_z_ramka(struct Pilka *pilka, struct Gracz *gracz, ALLEGRO_SAMPLE* hit_sound1) {
     if (pilka->y >= WYSOKOSC_EKRANU) {
         gracz->zycie--;
+        gracz->x_pozycja = 450;
         pilka->x = 180;
         pilka->y = 300;
+        pilka->ruch_lewo = false;
+        pilka->ruch_dol = true;
     }
     if (pilka->y <= 0) {
         pilka->ruch_dol = true;
@@ -489,15 +493,11 @@ void pilka_kolizja_z_ramka(struct Pilka *pilka, struct Gracz *gracz, ALLEGRO_SAM
 
 void pilka_kolizja_z_graczem(struct Pilka *pilka, struct Gracz gracz, ALLEGRO_SAMPLE* hit_sound1) {
     bool pilka_w_szerokosci_platformy = pilka->x >= gracz.x_pozycja && pilka->x <= gracz.x_pozycja + gracz.szerokosc_platformy;
-    bool pilka_na_wysokosci_platformy = pilka->y + 10 >= WYSOKOSC_EKRANU - 20;
+    bool pilka_na_wysokosci_platformy = pilka->y + 10 >= WYSOKOSC_EKRANU - 20 && pilka->y + 10 <= WYSOKOSC_EKRANU - 10;
 
     if (pilka_w_szerokosci_platformy && pilka_na_wysokosci_platformy && pilka->ruch_dol) {
         if (pilka->ruch_dol) {
             pilka->ruch_dol = false;
-            al_play_sample(hit_sound1, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-        }
-        else {
-            pilka->ruch_dol = true;
             al_play_sample(hit_sound1, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
         }
     }
@@ -634,7 +634,6 @@ void narysuj_interfejs(ALLEGRO_FONT* font, struct Gracz gracz, struct Ustawienia
 }
 
 void przejscie_do_kolejnego_poziomu(struct Ustawienia_gry *ustawienia_gry, struct Pilka *pilka, struct Gracz *gracz) {
-    ustawienia_gry->ilosc_cegiel_do_zbicia = WIERSZ_CEGIELEK*KOLUMNA_CEGIELEK;
     ustawienia_gry->poziom_gry++;
     pilka->x = 180;
     pilka->y = 300;
