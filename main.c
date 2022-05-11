@@ -657,7 +657,7 @@ void narysuj_ekran_przegranej(ALLEGRO_FONT* font, struct Ustawienia_gry ustawien
     al_draw_text(font, al_map_rgb(255, 255, 255), SZEROKOSC_EKRANU/3, WYSOKOSC_EKRANU/3, 0, komunikat_poziom);
     al_draw_text(font, al_map_rgb(255, 255, 255), SZEROKOSC_EKRANU/2, WYSOKOSC_EKRANU/3, 0, komunikat_punkty);
 
-    al_draw_textf(font, al_map_rgb(255, 255, 255), SZEROKOSC_EKRANU/3, WYSOKOSC_EKRANU/2, 0, "Nacisnij [Enter]  aby kontynuowac");
+    al_draw_textf(font, al_map_rgb(255, 255, 255), SZEROKOSC_EKRANU/3, WYSOKOSC_EKRANU/2, 0, "Nacisnij [Enter]  rozpoczac nowa gra");
     al_draw_textf(font, al_map_rgb(255, 255, 255), SZEROKOSC_EKRANU/3, WYSOKOSC_EKRANU/1.8, 0, "Nacisnij [Escape] aby wyjsc do menu");
 }
 
