@@ -36,9 +36,30 @@
 			<Add option="-Wall" />
 			<Add directory="allegro-5.0.10-mingw-4.7.0/include" />
 		</Compiler>
+		<Unit filename="kolizje.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kolizje.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="mechanika.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mechanika.h" />
+		<Unit filename="quadTree.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="quadTree.h" />
+		<Unit filename="rysowanie.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rysowanie.h" />
+		<Unit filename="stany_gry.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="stany_gry.h" />
+		<Unit filename="struktury.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
