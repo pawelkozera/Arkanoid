@@ -287,7 +287,7 @@
 
 1551083532 c:\users\admin\desktop\algorytmy\arkanoid\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\alcompat.h
 
-1653142661 source:c:\users\admin\desktop\projekty\arkanoid\main.c
+1653736683 source:c:\users\admin\desktop\projekty\arkanoid\main.c
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
@@ -297,6 +297,7 @@
 	<allegro5/allegro_audio.h>
 	<allegro5/allegro_acodec.h>
 	<allegro5/allegro_primitives.h>
+	<time.h>
 	"struktury.h"
 	"quadTree.h"
 	"rysowanie.h"
@@ -304,10 +305,10 @@
 	"mechanika.h"
 	"stany_gry.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro5.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro5.h
 	"allegro.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro.h
 	"allegro5/base.h"
 	"allegro5/altime.h"
 	"allegro5/bitmap.h"
@@ -348,7 +349,7 @@
 	"allegro5/utf8.h"
 	"allegro5/alcompat.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\base.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\base.h
 	<errno.h>
 	<limits.h>
 	<limits.h>
@@ -362,7 +363,7 @@
 	<dmalloc.h>
 	"allegro5/internal/alconfig.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\internal\alconfig.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\internal\alconfig.h
 	"allegro5/platform/alplatf.h"
 	"allegro5/platform/alwatcom.h"
 	"allegro5/platform/almngw32.h"
@@ -377,9 +378,9 @@
 	"allegro5/platform/astdint.h"
 	"allegro5/platform/astdbool.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alplatf.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alplatf.h
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alwatcom.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alwatcom.h
 	<io.h>
 	<i86.h>
 	<conio.h>
@@ -387,145 +388,145 @@
 	<direct.h>
 	<malloc.h>
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\almngw32.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\almngw32.h
 	<io.h>
 	<fcntl.h>
 	<direct.h>
 	<malloc.h>
 	"allegro5/platform/alplatf.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\albcc32.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\albcc32.h
 	<io.h>
 	<fcntl.h>
 	<direct.h>
 	<malloc.h>
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\almsvc.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\almsvc.h
 	<io.h>
 	<fcntl.h>
 	<direct.h>
 	<malloc.h>
 	"allegro5/platform/alplatf.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\aliphonecfg.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\aliphonecfg.h
 	<fcntl.h>
 	<unistd.h>
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alosxcfg.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alosxcfg.h
 	"allegro5/platform/alplatf.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alandroidcfg.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alandroidcfg.h
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alraspberrypicfg.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alraspberrypicfg.h
 	<fcntl.h>
 	<unistd.h>
 	<sys/types.h>
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alucfg.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alucfg.h
 	<fcntl.h>
 	<unistd.h>
 	"alunix.h"
 	"allegro5/platform/alplatf.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alunix.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\alunix.h
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\allegro_sdl_config.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\allegro_sdl_config.h
 	<fcntl.h>
 	<unistd.h>
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\astdint.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\astdint.h
 	<inttypes.h>
 	<stdint.h>
 	<limits.h>
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\astdbool.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\platform\astdbool.h
 	<stdbool.h>
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\altime.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\altime.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\bitmap.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\bitmap.h
 	"allegro5/color.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\color.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\color.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\bitmap_draw.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\bitmap_draw.h
 	"allegro5/bitmap.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\bitmap_io.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\bitmap_io.h
 	"allegro5/bitmap.h"
 	"allegro5/file.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\file.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\file.h
 	"allegro5/base.h"
 	"allegro5/path.h"
 	"allegro5/utf8.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\path.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\path.h
 	"allegro5/base.h"
 	"allegro5/utf8.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\utf8.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\utf8.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\bitmap_lock.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\bitmap_lock.h
 	"allegro5/bitmap.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\blender.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\blender.h
 	"allegro5/base.h"
 	"allegro5/color.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\clipboard.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\clipboard.h
 	"allegro5/base.h"
 	"allegro5/display.h"
 	"allegro5/utf8.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\display.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\display.h
 	"allegro5/bitmap.h"
 	"allegro5/color.h"
 	"allegro5/events.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\events.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\events.h
 	"allegro5/altime.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\config.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\config.h
 	"allegro5/file.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\cpu.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\cpu.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\debug.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\debug.h
 	<assert.h>
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\drawing.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\drawing.h
 	"allegro5/color.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\error.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\error.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\fixed.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\fixed.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\fmaths.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\fmaths.h
 	"allegro5/base.h"
 	"allegro5/fixed.h"
 	"allegro5/inline/fmaths.inl"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\inline\fmaths.inl
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\inline\fmaths.inl
 	"allegro5/error.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\fshook.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\fshook.h
 	"allegro5/base.h"
 	"allegro5/file.h"
 	"allegro5/path.h"
 	<sys/types.h>
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\fullscreen_mode.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\fullscreen_mode.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\haptic.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\haptic.h
 	"allegro5/base.h"
 	"allegro5/display.h"
 	"allegro5/events.h"
@@ -534,107 +535,108 @@
 	"allegro5/mouse.h"
 	"allegro5/touch_input.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\joystick.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\joystick.h
 	"allegro5/base.h"
 	"allegro5/events.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\keyboard.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\keyboard.h
 	"allegro5/base.h"
 	"allegro5/events.h"
 	"allegro5/keycodes.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\keycodes.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\keycodes.h
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\mouse.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\mouse.h
 	"allegro5/base.h"
 	"allegro5/events.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\touch_input.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\touch_input.h
 	"allegro5/base.h"
 	"allegro5/events.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\memory.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\memory.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\monitor.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\monitor.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\mouse_cursor.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\mouse_cursor.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\render_state.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\render_state.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\shader.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\shader.h
 	"allegro5/base.h"
 	"allegro5/transformations.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\transformations.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\transformations.h
 	"allegro5/display.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\system.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\system.h
 	"allegro5/config.h"
 	"allegro5/path.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\threads.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\threads.h
 	"allegro5/altime.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\timer.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\timer.h
 	"allegro5/base.h"
 	"allegro5/events.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\tls.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\tls.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\alcompat.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\alcompat.h
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro_font.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro_font.h
 	"allegro5/allegro.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro_image.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro_image.h
 	"allegro5/base.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro_audio.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro_audio.h
 	"allegro5/allegro.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro_acodec.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro_acodec.h
 	"allegro5/allegro.h"
 	"allegro5/allegro_audio.h"
 
-1653040186 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro_primitives.h
+1653669133 c:\users\admin\desktop\projekty\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\allegro_primitives.h
 	<allegro5/allegro.h>
 
-1653140961 c:\users\admin\desktop\projekty\arkanoid\struktury.h
+1653733998 c:\users\admin\desktop\projekty\arkanoid\struktury.h
 	<allegro5/allegro5.h>
+	<time.h>
 
-1653141097 source:c:\users\admin\desktop\projekty\arkanoid\quadtree.c
+1653669134 source:c:\users\admin\desktop\projekty\arkanoid\quadtree.c
 	"struktury.h"
 
-1653141533 c:\users\admin\desktop\projekty\arkanoid\quadtree.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\quadtree.h
 
-1653141891 source:c:\users\admin\desktop\projekty\arkanoid\rysowanie.c
+1653672188 source:c:\users\admin\desktop\projekty\arkanoid\rysowanie.c
 	<allegro5/allegro5.h>
 	<allegro5/allegro_font.h>
 	<allegro5/allegro_primitives.h>
 	"struktury.h"
 
-1653141663 c:\users\admin\desktop\projekty\arkanoid\rysowanie.h
+1653672191 c:\users\admin\desktop\projekty\arkanoid\rysowanie.h
 
-1653142098 source:c:\users\admin\desktop\projekty\arkanoid\kolizje.c
+1653735268 source:c:\users\admin\desktop\projekty\arkanoid\kolizje.c
 	<allegro5/allegro5.h>
 	<allegro5/allegro_audio.h>
 	<allegro5/allegro_acodec.h>
 	"struktury.h"
 
-1653141997 c:\users\admin\desktop\projekty\arkanoid\kolizje.h
+1653734568 c:\users\admin\desktop\projekty\arkanoid\kolizje.h
 
-1653142343 c:\users\admin\desktop\projekty\arkanoid\mechanika.h
+1653733117 c:\users\admin\desktop\projekty\arkanoid\mechanika.h
 
-1653142445 source:c:\users\admin\desktop\projekty\arkanoid\mechanika.c
+1653737081 source:c:\users\admin\desktop\projekty\arkanoid\mechanika.c
 	"struktury.h"
 
-1653142616 source:c:\users\admin\desktop\projekty\arkanoid\stany_gry.c
+1653737448 source:c:\users\admin\desktop\projekty\arkanoid\stany_gry.c
 	"struktury.h"
 
-1653142540 c:\users\admin\desktop\projekty\arkanoid\stany_gry.h
+1653669134 c:\users\admin\desktop\projekty\arkanoid\stany_gry.h
 

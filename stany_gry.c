@@ -110,10 +110,10 @@ void dodaj_punkty(struct Gracz *gracz, struct Cegielki *trafiona_cegla) {
 
 void przejscie_do_kolejnego_poziomu(struct Ustawienia_gry *ustawienia_gry, struct Pilka *pilka, struct Gracz *gracz) {
     ustawienia_gry->poziom_gry++;
-    pilka->x = 180;
-    pilka->y = 300;
-    pilka->ruch_lewo = false;
-    pilka->ruch_dol = true;
+    pilka[0].x = pilka[1].x = pilka[2].x = 180;
+    pilka[0].y = pilka[1].y = pilka[2].y = 300;
+    pilka[0].ruch_lewo = pilka[1].ruch_lewo = pilka[2].ruch_lewo = false;
+    pilka[0].ruch_dol = pilka[1].ruch_dol = pilka[2].ruch_dol = true;
     gracz->x_pozycja = SZEROKOSC_EKRANU/2;
 }
 
@@ -123,7 +123,11 @@ void reset_gry(struct Gracz *gracz, struct Ustawienia_gry *ustawienia_gry, struc
     gracz->x_pozycja = SZEROKOSC_EKRANU/2;
 
     ustawienia_gry->poziom_gry = 1;
+    ustawienia_gry->wyswietlany_bonus = false;
+    ustawienia_gry->ilosc_pilek = 1;
 
-    pilka->x = 180;
-    pilka->y = 300;
+    pilka[0].x = 180;
+    pilka[0].y = 300;
+    pilka[0].widoczna = true;
+    pilka[1].widoczna = pilka[2].widoczna = false;
 }

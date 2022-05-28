@@ -2,6 +2,7 @@
 #define STRUKTURY_H_INCLUDED
 
 #include <allegro5/allegro5.h>
+#include <time.h>
 
 struct Ustawienia_gry {
     int poziom_gry;
@@ -9,6 +10,8 @@ struct Ustawienia_gry {
     bool zakoncz_program;
     bool wyswietl_menu;
     bool wyswietl_ekran_przegranej;
+    bool wyswietlany_bonus;
+    int ilosc_pilek;
 };
 
 struct Gracz {
@@ -18,6 +21,7 @@ struct Gracz {
     int y_pozycja;
     int szerokosc_platformy;
     int ilosc_punktow;
+    int wysokosc;
 };
 
 struct Cegielki {
@@ -30,11 +34,21 @@ struct Cegielki {
 struct Pilka {
     int x, y, szybkosc;
     bool ruch_lewo, ruch_dol;
+    bool widoczna;
+};
+
+struct Bonus {
+    int x, y, szybkosc;
+    int szerokosc, wysokosc;
+    int typ_bonusu;
+    bool trwa;
+    clock_t czas_przed;
 };
 
 struct Grafiki {
     ALLEGRO_BITMAP* tlo;
     ALLEGRO_BITMAP* platforma;
+    ALLEGRO_BITMAP* platforma_bonus;
     ALLEGRO_BITMAP* cegla_zi1;
     ALLEGRO_BITMAP* cegla_zo1;
     ALLEGRO_BITMAP* cegla_zo2;
@@ -42,6 +56,7 @@ struct Grafiki {
     ALLEGRO_BITMAP* cegla_cz2;
     ALLEGRO_BITMAP* cegla_cz3;
     ALLEGRO_BITMAP* pilka;
+    ALLEGRO_BITMAP* bonus;
 };
 
 struct QuadTree {

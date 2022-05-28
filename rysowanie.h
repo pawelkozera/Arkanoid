@@ -5,5 +5,6 @@ void narysuj_ekran_przegranej(ALLEGRO_FONT* font, struct Ustawienia_gry ustawien
 void narysuj_menu(ALLEGRO_FONT* font, struct Przycisk przycisk);
 void rysowanie_cegielek(struct Cegielki *cegielki, struct Grafiki grafiki);
 void narysuj_interfejs(ALLEGRO_FONT* font, struct Gracz gracz, struct Ustawienia_gry ustawienia_gry);
+void narysuj_bonus(ALLEGRO_BITMAP* bonus_grafika, struct Bonus bonus);
 
 #endif // RYSOWANIE_H_INCLUDED

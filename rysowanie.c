@@ -83,3 +83,7 @@ void narysuj_menu(ALLEGRO_FONT* font, struct Przycisk przycisk)
     al_draw_filled_rectangle(przycisk.x, przycisk.y, przycisk.x + przycisk.szerokosc, przycisk.y + przycisk.wysokosc, al_map_rgb(112, 110, 104));
     al_draw_textf(font, al_map_rgb(255, 255, 255), przycisk.x + 10, przycisk.y + (przycisk.wysokosc/2), 0, przycisk.napis);
 }
+
+void narysuj_bonus(ALLEGRO_BITMAP* bonus_grafika, struct Bonus bonus) {
+    al_draw_bitmap(bonus_grafika, bonus.x, bonus.y, 0);
+}
