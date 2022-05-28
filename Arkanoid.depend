@@ -287,7 +287,7 @@
 
 1551083532 c:\users\admin\desktop\algorytmy\arkanoid\arkanoid\allegro-5.0.10-mingw-4.7.0\include\allegro5\alcompat.h
 
-1653736683 source:c:\users\admin\desktop\projekty\arkanoid\main.c
+1653750433 source:c:\users\admin\desktop\projekty\arkanoid\main.c
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
@@ -622,7 +622,7 @@
 
 1653672191 c:\users\admin\desktop\projekty\arkanoid\rysowanie.h
 
-1653735268 source:c:\users\admin\desktop\projekty\arkanoid\kolizje.c
+1653737938 source:c:\users\admin\desktop\projekty\arkanoid\kolizje.c
 	<allegro5/allegro5.h>
 	<allegro5/allegro_audio.h>
 	<allegro5/allegro_acodec.h>
@@ -632,11 +632,11 @@
 
 1653733117 c:\users\admin\desktop\projekty\arkanoid\mechanika.h
 
-1653737081 source:c:\users\admin\desktop\projekty\arkanoid\mechanika.c
+1653749608 source:c:\users\admin\desktop\projekty\arkanoid\mechanika.c
 	"struktury.h"
 
-1653737448 source:c:\users\admin\desktop\projekty\arkanoid\stany_gry.c
+1653750666 source:c:\users\admin\desktop\projekty\arkanoid\stany_gry.c
 	"struktury.h"
 
-1653669134 c:\users\admin\desktop\projekty\arkanoid\stany_gry.h
+1653750293 c:\users\admin\desktop\projekty\arkanoid\stany_gry.h
 

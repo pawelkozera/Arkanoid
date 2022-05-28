@@ -140,8 +140,9 @@ int main()
                     dodaj_punkty(&gracz, trafiona_cegielka);
 
                     if (ustawienia_gry.ilosc_cegiel_do_zbicia <= 0) {
-                        przejscie_do_kolejnego_poziomu(&ustawienia_gry, &pilka[j], &gracz);
+                        przejscie_do_kolejnego_poziomu(&ustawienia_gry, &pilka[j], &gracz, &bonus);
                         inicjalizacja_cegielek(cegielki, &ustawienia_gry);
+                        break;
                     }
                 }
             }

@@ -62,7 +62,7 @@ bool czy_dodac_bonus(struct Ustawienia_gry *ustawienia_gry) {
         srand(time(NULL));
         int szansa = rand()%100 + 1;
 
-        if (szansa <= 10) { // szansa
+        if (szansa <= 30) { // szansa
             ustawienia_gry->wyswietlany_bonus = true;
             return true;
         }
