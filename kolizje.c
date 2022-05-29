@@ -7,7 +7,10 @@
 #define WYSOKOSC_EKRANU 600
 #define SZEROKOSC_CEGIELKI 101
 #define WYSOKOSC_CEGIELKI 76
-
+/// KOLIZJA PIŁKI Z RAMKĄ
+/** Uderzenie w boczne i górną ścianę powoduje odbicie piłki.
+Uderzenie w dolną ścianę utratę życia lub przegrania gry oraz reset miejsca platformy i piłki do stanu początkowego.
+Jest również aktywowany dźwięk uderzenia. */
 void pilka_kolizja_z_ramka(struct Pilka *pilka, struct Gracz *gracz, ALLEGRO_SAMPLE* hit_sound1, struct Ustawienia_gry *ustawienia_gry) {
     if (pilka->y >= WYSOKOSC_EKRANU) {
         pilka->widoczna = false;
@@ -38,6 +41,8 @@ void pilka_kolizja_z_ramka(struct Pilka *pilka, struct Gracz *gracz, ALLEGRO_SAM
     }
 }
 
+/// KOLIZJA PIŁKI Z GRACZEM
+/** Uderzenie w platformę gracza powoduje odbicie piłki i aktywację dźwięku. */
 void pilka_kolizja_z_graczem(struct Pilka *pilka, struct Gracz gracz, ALLEGRO_SAMPLE* hit_sound1) {
     bool pilka_w_szerokosci_platformy = pilka->x >= gracz.x_pozycja && pilka->x <= gracz.x_pozycja + gracz.szerokosc_platformy;
     bool pilka_na_wysokosci_platformy = pilka->y + 10 >= WYSOKOSC_EKRANU - 20 && pilka->y + 10 <= WYSOKOSC_EKRANU - 10;
@@ -50,6 +55,8 @@ void pilka_kolizja_z_graczem(struct Pilka *pilka, struct Gracz gracz, ALLEGRO_SA
     }
 }
 
+/// KOLIZJA PIŁKI Z CEGŁĄ
+/** 4 wersje uderzenia cegiełki z każdej strony. Powodowane są odbicie piłki i aktywacja dźwięku. */
 void kolizja_cegla(struct Cegielki *trafiona_cegielka, struct Pilka *pilka, ALLEGRO_SAMPLE* hit_sound2) {
     printf("c: %d p: %d\n", trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI, pilka->y);
 
@@ -79,6 +86,8 @@ void kolizja_cegla(struct Cegielki *trafiona_cegielka, struct Pilka *pilka, ALLE
     }
 }
 
+/// KOLIZJA GRACZA Z BONUSEM
+/** Mechanika łapania bonusu platformą gracza. */
 bool kolizja_bonus(struct Gracz *gracz, struct Bonus *bonus) {
     bool y_pozycja = bonus->y >= gracz->y_pozycja && bonus->y <= gracz->y_pozycja + gracz->wysokosc;
     bool x_pozycja = bonus->x >= gracz->x_pozycja && bonus->x <= gracz->x_pozycja + gracz->szerokosc_platformy;

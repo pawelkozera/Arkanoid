@@ -57,7 +57,7 @@ int main()
     ALLEGRO_SAMPLE* music = al_load_sample("music.wav");
     ALLEGRO_SAMPLE* hit_sound1 = al_load_sample("hit_sound1.wav");
     ALLEGRO_SAMPLE* hit_sound2 = al_load_sample("hit_sound2.wav");
-    //al_play_sample(music, 0.02, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+    al_play_sample(music, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 
     al_init_primitives_addon();
 

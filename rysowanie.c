@@ -9,6 +9,8 @@
 extern int KOLUMNA_CEGIELEK;
 extern int WIERSZ_CEGIELEK;
 
+/// RYSOWANIE CEGIEŁEK
+/** Funkcja rysuje cegiełki na planszy. */
 void rysowanie_cegielek(struct Cegielki *cegielki, struct Grafiki grafiki) {
     for(int i = 0; i < KOLUMNA_CEGIELEK; i++) {
         for(int j = 0; j < WIERSZ_CEGIELEK; j++) {
@@ -38,6 +40,8 @@ void rysowanie_cegielek(struct Cegielki *cegielki, struct Grafiki grafiki) {
     }
 }
 
+/// RYSOWANIE INTERFEJSU
+/** Funkcja rysuje interfejs z podstawowymi informacjami do gry */
 void narysuj_interfejs(ALLEGRO_FONT* font, struct Gracz gracz, struct Ustawienia_gry ustawienia_gry) {
     char komunikat_zycie[20] = "Ilosc zyc: ";
     char ilosc_zyc[2];
@@ -59,6 +63,8 @@ void narysuj_interfejs(ALLEGRO_FONT* font, struct Gracz gracz, struct Ustawienia
     al_draw_text(font, al_map_rgb(255, 255, 255), 350, WYSOKOSC_EKRANU - 100, 0, komunikat_punkty);
 }
 
+/// RYSOWANIE EKRAN PRZEGRANEJ
+/** Funkcja rysuje okno z podstawowymi informacjami z zakończonej gry. */
 void narysuj_ekran_przegranej(ALLEGRO_FONT* font, struct Ustawienia_gry ustawienia_gry, struct Gracz gracz) {
     char komunikat_poziom[20] = "Poziom: ";
     char poziom[2];
@@ -78,12 +84,16 @@ void narysuj_ekran_przegranej(ALLEGRO_FONT* font, struct Ustawienia_gry ustawien
     al_draw_textf(font, al_map_rgb(255, 255, 255), SZEROKOSC_EKRANU/3, WYSOKOSC_EKRANU/1.8, 0, "Nacisnij [Escape] aby wyjsc do menu");
 }
 
+/// RYSOWANIE MENU
+/**  */
 void narysuj_menu(ALLEGRO_FONT* font, struct Przycisk przycisk)
 {
     al_draw_filled_rectangle(przycisk.x, przycisk.y, przycisk.x + przycisk.szerokosc, przycisk.y + przycisk.wysokosc, al_map_rgb(112, 110, 104));
     al_draw_textf(font, al_map_rgb(255, 255, 255), przycisk.x + 10, przycisk.y + (przycisk.wysokosc/2), 0, przycisk.napis);
 }
 
+/// RYSOWANIE BONUSU
+/**  */
 void narysuj_bonus(ALLEGRO_BITMAP* bonus_grafika, struct Bonus bonus) {
     al_draw_bitmap(bonus_grafika, bonus.x, bonus.y, 0);
 }

@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['narysuj_5fbonus_0',['narysuj_bonus',['../rysowanie_8c.html#a4961d00980b1bbf143275f5b489c93fe',1,'narysuj_bonus(ALLEGRO_BITMAP *bonus_grafika, struct Bonus bonus):&#160;rysowanie.c'],['../rysowanie_8h.html#a4961d00980b1bbf143275f5b489c93fe',1,'narysuj_bonus(ALLEGRO_BITMAP *bonus_grafika, struct Bonus bonus):&#160;rysowanie.c']]],
+  ['narysuj_5fekran_5fprzegranej_1',['narysuj_ekran_przegranej',['../rysowanie_8c.html#a07310784a41a5a45f8c966a39bec5096',1,'narysuj_ekran_przegranej(ALLEGRO_FONT *font, struct Ustawienia_gry ustawienia_gry, struct Gracz gracz):&#160;rysowanie.c'],['../rysowanie_8h.html#a07310784a41a5a45f8c966a39bec5096',1,'narysuj_ekran_przegranej(ALLEGRO_FONT *font, struct Ustawienia_gry ustawienia_gry, struct Gracz gracz):&#160;rysowanie.c']]],
+  ['narysuj_5finterfejs_2',['narysuj_interfejs',['../rysowanie_8c.html#a2e2ac3492f5dbf1f07efc7a11075b730',1,'narysuj_interfejs(ALLEGRO_FONT *font, struct Gracz gracz, struct Ustawienia_gry ustawienia_gry):&#160;rysowanie.c'],['../rysowanie_8h.html#a2e2ac3492f5dbf1f07efc7a11075b730',1,'narysuj_interfejs(ALLEGRO_FONT *font, struct Gracz gracz, struct Ustawienia_gry ustawienia_gry):&#160;rysowanie.c']]],
+  ['narysuj_5fmenu_3',['narysuj_menu',['../rysowanie_8c.html#a7c4506e753d61d7e1e768099ca5348a9',1,'narysuj_menu(ALLEGRO_FONT *font, struct Przycisk przycisk):&#160;rysowanie.c'],['../rysowanie_8h.html#a7c4506e753d61d7e1e768099ca5348a9',1,'narysuj_menu(ALLEGRO_FONT *font, struct Przycisk przycisk):&#160;rysowanie.c']]]
+];

@@ -5,6 +5,8 @@
 #define SZEROKOSC_CEGIELKI 101
 #define ILOSC_PRZYCISKOW 2
 
+/// RUCH PLATFORMY W PRAWO
+/** Wciśnięcie lewej strzałki porusza platformą w lewo. */
 int ruch_w_prawo(int x_gracz, int szybkosc_gracza, int szerokosc_gracza) {
     x_gracz += szybkosc_gracza;
     if (x_gracz >= SZEROKOSC_EKRANU - szerokosc_gracza) {
@@ -14,6 +16,8 @@ int ruch_w_prawo(int x_gracz, int szybkosc_gracza, int szerokosc_gracza) {
     return x_gracz;
 }
 
+/// RUCH PLATFORMY W LEWO
+/** Wciśnięcie prawej strzałki porusza platformą w prawo. */
 int ruch_w_lewo(int x_gracz, int szybkosc_gracza) {
     x_gracz -= szybkosc_gracza;
     if (x_gracz <= 0) {
@@ -23,6 +27,8 @@ int ruch_w_lewo(int x_gracz, int szybkosc_gracza) {
     return x_gracz;
 }
 
+/// RUCH PIŁKI PO OSI X
+/**  */
 int ruch_pilki_x(struct Pilka pilka) {
     if (pilka.ruch_lewo) {
         return pilka.x -= pilka.szybkosc;
@@ -32,6 +38,8 @@ int ruch_pilki_x(struct Pilka pilka) {
     }
 }
 
+/// RUCH PIŁKI PO OSI Y
+/**  */
 int ruch_pilki_y(struct Pilka pilka) {
     if (pilka.ruch_dol) {
         return pilka.y += pilka.szybkosc;
@@ -41,6 +49,8 @@ int ruch_pilki_y(struct Pilka pilka) {
     }
 }
 
+/// SPRAWDZANIE NACIŚNIĘCIA PRZYCISKU MYSZKĄ
+/**  */
 int sprawdz_nacisniecie_przycisku(int mysz_x, int mysz_y, struct Przycisk przyciski[])
 {
     bool myszka_w_zakresie_x = false;
@@ -57,6 +67,8 @@ int sprawdz_nacisniecie_przycisku(int mysz_x, int mysz_y, struct Przycisk przyci
     return -1;
 }
 
+/// LOSOWANIE BONUSU I GENERACJA
+/** Przy zniszczeniu cegły istnieje 30% szansa pojawienia się bonusu. */
 bool czy_dodac_bonus(struct Ustawienia_gry *ustawienia_gry) {
     if (ustawienia_gry->wyswietlany_bonus == false) {
         srand(time(NULL));
@@ -71,6 +83,8 @@ bool czy_dodac_bonus(struct Ustawienia_gry *ustawienia_gry) {
     return false;
 }
 
+/// RUCH BONUSU W DÓŁ
+/**  */
 void ruch_w_dol_bonusu(struct Bonus *bonus, struct Ustawienia_gry *ustawienia_gry) {
     if (bonus->y > WYSOKOSC_EKRANU) {
         ustawienia_gry->wyswietlany_bonus = false;
@@ -80,6 +94,8 @@ void ruch_w_dol_bonusu(struct Bonus *bonus, struct Ustawienia_gry *ustawienia_gr
     }
 }
 
+/// USTAWIENIE BONUSU
+/** Pojawienie się bonusu na środku zniszczonej cegły */
 void ustawienie_bonusu(struct Bonus *bonus, struct Cegielki *trafiona_cegielka) {
     srand(time(NULL));
     bonus->typ_bonusu = rand()%3;
@@ -87,6 +103,8 @@ void ustawienie_bonusu(struct Bonus *bonus, struct Cegielki *trafiona_cegielka) 
     bonus->y = trafiona_cegielka->y_pozycja;
 }
 
+/// USTAWIENIE POCZĄTKOWE PIŁKI
+/**  */
 void ustaw_pilki(struct Pilka *pilka, struct Ustawienia_gry *ustawienia_gry) {
     int z = 0;
     for (int i = 0; i < ustawienia_gry->ilosc_pilek; i++) {

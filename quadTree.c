@@ -3,6 +3,8 @@
 #define SZEROKOSC_CEGIELKI 101
 #define WYSOKOSC_CEGIELKI 76
 
+/// STWORZENIE DRZEWA CZWÓRKOWEGO
+/**  */
 struct QuadTree* stworz_drzewo(int lewy_x, int lewy_y, int prawy_x, int prawy_y) {
     struct QuadTree* drzewo = (struct QuadTree*)malloc(sizeof(struct QuadTree));
 
@@ -20,6 +22,8 @@ struct QuadTree* stworz_drzewo(int lewy_x, int lewy_y, int prawy_x, int prawy_y)
     return drzewo;
 }
 
+/// SPRAWDZENIE GRANICY CEGŁY
+/**  */
 bool czy_jest_w_granicy_cegly(struct QuadTree *quadTree, struct Cegielki *cegielka) {
     bool x_granica = cegielka->x_pozycja >= quadTree->lewy_x && cegielka->x_pozycja <= quadTree->prawy_x;
     bool y_granica = cegielka->y_pozycja >= quadTree->lewy_y && cegielka->y_pozycja <= quadTree->prawy_y;
@@ -27,6 +31,8 @@ bool czy_jest_w_granicy_cegly(struct QuadTree *quadTree, struct Cegielki *cegiel
     return x_granica && y_granica;
 }
 
+/// SPRAWDZENIE GRANICY PIŁKI
+/**  */
 bool czy_jest_w_granicy_pilka(struct QuadTree *quadTree, struct Pilka *pilka) {
     bool x_granica = pilka->x >= quadTree->lewy_x && pilka->x <= quadTree->prawy_x;
     bool y_granica = pilka->y >= quadTree->lewy_y && pilka->y <= quadTree->prawy_y;
@@ -34,6 +40,8 @@ bool czy_jest_w_granicy_pilka(struct QuadTree *quadTree, struct Pilka *pilka) {
     return x_granica && y_granica;
 }
 
+/// DODANIE CEGŁY DO DRZEWA CZWÓRKOWEGO
+/**  */
 void dodaj_do_drzewa(struct QuadTree *quadTree, struct Cegielki *cegielka) {
     if (cegielka == NULL) {
         return;
@@ -88,6 +96,8 @@ void dodaj_do_drzewa(struct QuadTree *quadTree, struct Cegielki *cegielka) {
     }
 }
 
+/// SZUKANIE W DRZEWIE
+/**  */
 struct Cegielki* szukaj_w_drzewie(struct QuadTree *quadTree, struct Pilka *pilka) {
     if (!czy_jest_w_granicy_pilka(quadTree, pilka)) {
         return NULL;
