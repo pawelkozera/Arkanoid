@@ -9,7 +9,8 @@ extern int KOLUMNA_CEGIELEK;
 extern int WIERSZ_CEGIELEK;
 
 /// LOSOWANIE CEGIEŁEK
-/** Losowanie pozycji oraz odporności cegieł. */
+/** Przyjmuje 2 argumenty, wskaznik na dynamiczna strukture cegielki, wskaznik na ustawienia gry.
+Losowanie pozycji oraz odporności cegieł. */
 void inicjalizacja_cegielek(struct Cegielki *cegielki, struct Ustawienia_gry *ustawienia_gry) {
     srand(time(NULL));
     int hp = 1;
@@ -98,7 +99,8 @@ void inicjalizacja_cegielek(struct Cegielki *cegielki, struct Ustawienia_gry *us
 }
 
 /// DODAWANIE I ZLICZANIE PUNKTÓW
-/**  */
+/** Przyjmuje 2 argumenty, wskaznik na gracza, wskaznik na trafiona cegielke.
+Dodaje punkty w zaleznosci od typu zbitej cegly. */
 void dodaj_punkty(struct Gracz *gracz, struct Cegielki *trafiona_cegla) {
     if (trafiona_cegla->typ_cegly == 3 && trafiona_cegla->wytrzymalosc == 0) {
         gracz->ilosc_punktow += 150;
@@ -112,7 +114,9 @@ void dodaj_punkty(struct Gracz *gracz, struct Cegielki *trafiona_cegla) {
 }
 
 /// PRZEJŚCIE DO NASTĘPNEGO POZIOMU
-/** Po zbiciu wszystkich cegieł następuje przejście do kolejnego poziomu. */
+/** Przyjmuje 4 argumenty, wskaznik na ustawienia gry, wskaznik na pilke, wskaznik na gracza, wskaznik na bonus.
+Po zbiciu wszystkich cegieł następuje przejście do kolejnego poziomu.
+Następuje reset pozycji pilki, gracza oraz bonusow. */
 void przejscie_do_kolejnego_poziomu(struct Ustawienia_gry *ustawienia_gry, struct Pilka *pilka, struct Gracz *gracz, struct Bonus *bonus) {
     ustawienia_gry->poziom_gry++;
     ustawienia_gry->wyswietlany_bonus = false;
@@ -128,7 +132,8 @@ void przejscie_do_kolejnego_poziomu(struct Ustawienia_gry *ustawienia_gry, struc
 }
 
 /// URUCHOMIENIE GRY PONOWNIE
-/**  */
+/** Przyjmuje 3 argumenty, wskaznik na gracza, wskaznik na ustawienia gry, wskaznik na pilke
+Przywraca ustawienia poczatkowe gry */
 void reset_gry(struct Gracz *gracz, struct Ustawienia_gry *ustawienia_gry, struct Pilka *pilka) {
     gracz->ilosc_punktow = 0;
     gracz->zycie = 3;

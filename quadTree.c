@@ -4,7 +4,10 @@
 #define WYSOKOSC_CEGIELKI 76
 
 /// STWORZENIE DRZEWA CZWÓRKOWEGO
-/**  */
+/** Przyjmuje 4 argumenty int, lewy_x, lewy_y wskazuja na lewy gorny rog ekranu, a prawy_x, prawy_y na prawy dolny rog ekranu.
+Ustawia wskaznik na cegielke oraz wskazniki na 4 rogi ekranu na NULL
+Zwraca wskażnik na korzen drzewa.
+*/
 struct QuadTree* stworz_drzewo(int lewy_x, int lewy_y, int prawy_x, int prawy_y) {
     struct QuadTree* drzewo = (struct QuadTree*)malloc(sizeof(struct QuadTree));
 
@@ -23,7 +26,10 @@ struct QuadTree* stworz_drzewo(int lewy_x, int lewy_y, int prawy_x, int prawy_y)
 }
 
 /// SPRAWDZENIE GRANICY CEGŁY
-/**  */
+/**
+Przyjmuje 2 argumenty, wskaznik na drzewo, wskaznik na cegielke.
+Zwraca true, jesli cegielka jest w granicy danego rogu drzewa.
+*/
 bool czy_jest_w_granicy_cegly(struct QuadTree *quadTree, struct Cegielki *cegielka) {
     bool x_granica = cegielka->x_pozycja >= quadTree->lewy_x && cegielka->x_pozycja <= quadTree->prawy_x;
     bool y_granica = cegielka->y_pozycja >= quadTree->lewy_y && cegielka->y_pozycja <= quadTree->prawy_y;
@@ -32,7 +38,10 @@ bool czy_jest_w_granicy_cegly(struct QuadTree *quadTree, struct Cegielki *cegiel
 }
 
 /// SPRAWDZENIE GRANICY PIŁKI
-/**  */
+/**
+Przyjmuje 2 argumenty, wskaznik na drzewo, wskaznik na pilke.
+Zwraca true, jesli pilka jest w granicy danego rogu drzewa.
+*/
 bool czy_jest_w_granicy_pilka(struct QuadTree *quadTree, struct Pilka *pilka) {
     bool x_granica = pilka->x >= quadTree->lewy_x && pilka->x <= quadTree->prawy_x;
     bool y_granica = pilka->y >= quadTree->lewy_y && pilka->y <= quadTree->prawy_y;
@@ -41,7 +50,11 @@ bool czy_jest_w_granicy_pilka(struct QuadTree *quadTree, struct Pilka *pilka) {
 }
 
 /// DODANIE CEGŁY DO DRZEWA CZWÓRKOWEGO
-/**  */
+/**
+Przyjmuje 2 argumenty, wskaznik na drzewo, wskaznik na cegielke.
+Dzieli ekran na 4 czesci dopoki nie bedzie mniejszy od szerokosci i wysokosci cegielki.
+Jesli cegielka rozna od NULL i jest wolne miejsce to przypisujemy wskaznik na dana cegielke.
+*/
 void dodaj_do_drzewa(struct QuadTree *quadTree, struct Cegielki *cegielka) {
     if (cegielka == NULL) {
         return;
@@ -97,7 +110,11 @@ void dodaj_do_drzewa(struct QuadTree *quadTree, struct Cegielki *cegielka) {
 }
 
 /// SZUKANIE W DRZEWIE
-/**  */
+/**
+Przyjmuje 2 argumenty, wskaznik na drzewo, wskaznik na pilke
+Zwraca wskaznik na cegielke jesli pozycja pilki i cegielki jest taka sama w drzewie.
+W innym przypadku zwraca NULL;
+*/
 struct Cegielki* szukaj_w_drzewie(struct QuadTree *quadTree, struct Pilka *pilka) {
     if (!czy_jest_w_granicy_pilka(quadTree, pilka)) {
         return NULL;
