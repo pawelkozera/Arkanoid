@@ -65,19 +65,20 @@ void kolizja_cegla(struct Cegielki *trafiona_cegielka, struct Pilka *pilka, ALLE
     printf("c: %d p: %d\n", trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI, pilka->y);
 
     // od dolu
-    if (pilka->y >= trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - pilka->szybkosc && !pilka->ruch_dol) {
+    bool kolizja_dol = pilka->y >= trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - pilka->szybkosc;
+    if (kolizja_dol && !pilka->ruch_dol) {
         puts("dol");
         pilka->ruch_dol = true;
         al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
     // od prawej
-    else if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI && pilka->x > trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2 && pilka->ruch_lewo) {
+    else if (pilka->y >= trafiona_cegielka->y_pozycja + pilka->szybkosc && pilka->y <= trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - pilka->szybkosc && pilka->x > trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2 && pilka->ruch_lewo) {
         puts("prawo");
         pilka->ruch_lewo = false;
         al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
     // od lewej
-    else if (pilka->y > trafiona_cegielka->y_pozycja && pilka->y < trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI && pilka->x < trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2 && !pilka->ruch_lewo) {
+    else if (pilka->y >= trafiona_cegielka->y_pozycja + pilka->szybkosc && pilka->y <= trafiona_cegielka->y_pozycja + WYSOKOSC_CEGIELKI - pilka->szybkosc && pilka->x < trafiona_cegielka->x_pozycja + SZEROKOSC_CEGIELKI/2 && !pilka->ruch_lewo) {
         puts("lewo");
         pilka->ruch_lewo = true;
         al_play_sample(hit_sound2, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);

@@ -126,6 +126,9 @@ void przejscie_do_kolejnego_poziomu(struct Ustawienia_gry *ustawienia_gry, struc
     pilka[0].y = 300;
     pilka[0].ruch_lewo = false;
     pilka[0].ruch_dol = true;
+    pilka[0].widoczna = true;
+    pilka[1].widoczna = false;
+    pilka[2].widoczna = false;
     gracz->szerokosc_platformy = 50;
     gracz->x_pozycja = SZEROKOSC_EKRANU/2;
     gracz->y_pozycja = WYSOKOSC_EKRANU - 20;
@@ -146,5 +149,6 @@ void reset_gry(struct Gracz *gracz, struct Ustawienia_gry *ustawienia_gry, struc
     pilka[0].x = 180;
     pilka[0].y = 300;
     pilka[0].widoczna = true;
+    pilka[0].ruch_lewo = false;
     pilka[1].widoczna = pilka[2].widoczna = false;
 }
